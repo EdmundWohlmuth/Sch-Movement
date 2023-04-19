@@ -9,6 +9,7 @@ public class GrapplingHookControl : MonoBehaviour
     [SerializeField] LineRenderer LR;
     [SerializeField] Transform camTransform;
     [SerializeField] Transform hookTransform;
+    [SerializeField] Camera cam;
 
     public LayerMask grappleable;
 
@@ -17,6 +18,8 @@ public class GrapplingHookControl : MonoBehaviour
     [SerializeField] float delay;
     [SerializeField] float coolDown;
     [SerializeField] float coolDownTimer;
+    [SerializeField] float overshootYAxis;
+    Vector3 velocityToSet;
 
     Vector3 grapplePoint;
     [SerializeField] bool grappling;
@@ -56,6 +59,7 @@ public class GrapplingHookControl : MonoBehaviour
     void StartGrapple() // initiate the grapple
     {
         if (coolDownTimer > 0) return;
+        //PC.freeze = true;
 
         grappling = true;
 
@@ -81,12 +85,59 @@ public class GrapplingHookControl : MonoBehaviour
     }
     void Grapple()  // do the grapple
     {
+        PC.freeze = false;
 
+        Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+
+        float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
+        float highestPointOnArc = grapplePointRelativeYPos + overshootYAxis;
+
+        if (grapplePointRelativeYPos < 0) highestPointOnArc = overshootYAxis;
+
+        JumpToPosition(grapplePoint, highestPointOnArc);
+
+        Invoke(nameof(ExitGrapple), 1f);
     }
     void ExitGrapple() // end the grapple
     {
         grappling = false;
         coolDownTimer = coolDown;
         LR.enabled = false;
+        PC.freeze = false;
+    }
+
+    //-GRAPPLE-MATHS-------
+    public void JumpToPosition(Vector3 targetPosition, float trajectoryHeight)
+    {
+        grappling = true;
+
+        velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
+        Invoke(nameof(SetVelocity), 0.1f);
+
+        Invoke(nameof(ResetRestrictions), 3f);
+    }
+    public Vector3 CalculateJumpVelocity(Vector3 startPoint, Vector3 endPoint, float trajectoryHeight)
+    {
+        float gravity = Physics.gravity.y;
+        float displacementY = endPoint.y - startPoint.y;
+        Vector3 displacementXZ = new Vector3(endPoint.x - startPoint.x, 0f, endPoint.z - startPoint.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * trajectoryHeight);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * trajectoryHeight / gravity)
+            + Mathf.Sqrt(2 * (displacementY - trajectoryHeight) / gravity));
+
+        return velocityXZ + velocityY;
+    }
+    private void SetVelocity()
+    {
+        //enableMovementOnNextTouch = true;
+        GetComponent<Rigidbody>().velocity = velocityToSet;
+
+        //cam.DoFov(grappleFov);
+    }
+    public void ResetRestrictions()
+    {
+        grappling = false;
+        //cam.DoFov(85f);
     }
 }

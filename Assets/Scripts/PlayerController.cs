@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float drag;
     float horizontalInput;
     float verticalInput;
+    public bool freeze = false;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
         PlayerInput();
         ClampSpeed();
         CheckGrounded();
+        if (freeze) rb.velocity = Vector3.zero; // if I disable movement it'll be better
 
         // Debug.Log(transform.position);
     }
@@ -108,4 +110,5 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) rb.drag = drag;
         else rb.drag = 0.5f;
     }
+
 }
