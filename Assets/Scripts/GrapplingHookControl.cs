@@ -22,7 +22,7 @@ public class GrapplingHookControl : MonoBehaviour
     Vector3 velocityToSet;
 
     Vector3 grapplePoint;
-    [SerializeField] bool grappling;
+    public bool grappling;
 
     [Header("Input")]
     public KeyCode grappleKey = KeyCode.Mouse1;
@@ -66,9 +66,9 @@ public class GrapplingHookControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, maxDist, grappleable))
         {
-            Debug.Log("hit");
+            //Debug.Log("hit");
             grapplePoint = hit.point;
-            Debug.Log(hit.point);
+            //Debug.Log(hit.point);
 
             Invoke(nameof(Grapple), delay);
         }
@@ -85,8 +85,6 @@ public class GrapplingHookControl : MonoBehaviour
     }
     void Grapple()  // do the grapple
     {
-        PC.freeze = false;
-
         Vector3 lowestPoint = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
 
         float grapplePointRelativeYPos = grapplePoint.y - lowestPoint.y;
@@ -103,7 +101,6 @@ public class GrapplingHookControl : MonoBehaviour
         grappling = false;
         coolDownTimer = coolDown;
         LR.enabled = false;
-        PC.freeze = false;
     }
 
     //-GRAPPLE-MATHS-------
