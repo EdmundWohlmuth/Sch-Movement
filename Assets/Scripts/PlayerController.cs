@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(wallForward * speed, ForceMode.Force);
         // stick to wall
-        if (!(leftWall && horizontalInput < 0) && !(rightWall && horizontalInput > 0) && !exitingWall) rb.AddForce(-wallNormal * wallRunForce, ForceMode.Force);
+        if (!(leftWall && horizontalInput < 0) && !(rightWall && horizontalInput > 0)) rb.AddForce(-wallNormal * wallRunForce, ForceMode.Force);
     }
     void StopWallRun()
     {
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
         {
             exitWallTime -= Time.deltaTime;
         }
-        else if (exitWallTime < 0)
+        else if (exitWallTime <= 0)
         {
             exitingWall = false;
         }
@@ -172,14 +172,17 @@ public class PlayerController : MonoBehaviour
     //-WALL-JUMPING-----
     void WallJump()
     {
-        wallRunning = false;
+        // enter exiting wall state
         exitingWall = true;
-        exitWallTime = exitWallTimer;
+        exitWallTimer = exitWallTime;
+
         Vector3 wallNormal = rightWall ? rightWallHit.normal : leftWallHit.normal;
 
         Vector3 forceToApply = transform.up * wallJumpVerticalForce + wallNormal * wallJumpHorizontalForce;
+
+        // reset y velocity and add force
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(forceToApply * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(forceToApply, ForceMode.Impulse);
     }
 
     //-GROUNED-CHECK----

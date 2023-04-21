@@ -2101,13 +2101,15 @@ MonoBehaviour:
   jumpCoolDown: 0.1
   airMulriplier: 2
   canJump: 1
-  wallJumpHorizontalForce: 200
-  wallJumpVerticalForce: 175
+  wallJumpHorizontalForce: 15
+  wallJumpVerticalForce: 10
   wallRunSpeed: 9
-  wallRunForce: 100
+  wallRunForce: 5
   maxWallRunTime: 5
   wallCheckDist: 1
   minJumpHeight: 3
+  wallRunning: 0
+  exitingWall: 0
   exitWallTimer: 0.2
   height: 2
   ground:
