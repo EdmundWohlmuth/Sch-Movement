@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
     public GameObject cam;
     public GrapplingHookControl GHC;
     public Transform orientation;
+    public WeaponController WC;
+
 
     // Start is called before the first frame update
     void Start()

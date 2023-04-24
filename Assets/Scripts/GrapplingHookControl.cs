@@ -70,11 +70,19 @@ public class GrapplingHookControl : MonoBehaviour
             grapplePoint = hit.point;
             //Debug.Log(hit.point);
 
-            Invoke(nameof(Grapple), delay);
+            if (hit.transform.gameObject.layer == 7)
+            {
+                PC.WC.weapon = hit.transform.gameObject.GetComponent<WeaponController>().weapon;
+                hit.transform.gameObject.GetComponent<WeaponController>().SetMelee();
+                Invoke(nameof(ExitGrapple), delay);
+            }
+            else Invoke(nameof(Grapple), delay);
+
+
         }
         else
         {
-            Debug.Log("miss");
+            //Debug.Log("miss");
             grapplePoint = camTransform.position + camTransform.forward * maxDist;
             Invoke(nameof(ExitGrapple), delay);        
         }
