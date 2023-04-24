@@ -66,12 +66,13 @@ public class GrapplingHookControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, maxDist, grappleable))
         {
-            //Debug.Log("hit");
+            Debug.Log("hit");
             grapplePoint = hit.point;
             //Debug.Log(hit.point);
 
             if (hit.transform.gameObject.layer == 7)
             {
+                Debug.Log("enemy");
                 PC.WC.weapon = hit.transform.gameObject.GetComponent<WeaponController>().weapon;
                 hit.transform.gameObject.GetComponent<WeaponController>().SetMelee();
                 Invoke(nameof(ExitGrapple), delay);
