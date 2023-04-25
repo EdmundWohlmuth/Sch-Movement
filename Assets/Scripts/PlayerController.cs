@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Gun Control")]
     KeyCode shootKey = KeyCode.Mouse0;
+    bool shooting;
 
     [Header("Refrences")]
     Rigidbody rb;
@@ -86,6 +87,9 @@ public class PlayerController : MonoBehaviour
 
     void PlayerInput()
     {
+        if (WC.isAutoFire) shooting = Input.GetKey(KeyCode.Mouse0);
+        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+
         // if (Input.GetAxisRaw("Horizontal") == 1) Debug.Log("horizontal");
         // if (Input.GetAxisRaw("Vertical") == 1) Debug.Log("vertical");
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -97,7 +101,7 @@ public class PlayerController : MonoBehaviour
             Jump();
             Invoke(nameof(ResetJump), jumpCoolDown); // Invoke - runs meathods after x seconds           
         }
-        if (Input.GetKeyDown(shootKey))
+        if (shooting)
         {
             WC.Fire();
         }

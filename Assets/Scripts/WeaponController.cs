@@ -25,10 +25,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] int damage;                 // damage gun deals
     [SerializeField] int knockback;              // how much the gun pushes player in air
     [SerializeField] int projectilesPerShot;     // how many bullets per shot (shotguns)
-    [SerializeField] float projectileSpeed;        // how quick the bullets move
-    [SerializeField] float fireRate;               // how quickly does the gun shoot
-    [SerializeField] float bulletSpread;           // how much the bullet deviates
-    [SerializeField] bool isAutoFire;            // can hold down to shoot
+    [SerializeField] float projectileSpeed;      // how quick the bullets move
+    [SerializeField] float fireRate;             // how quickly does the gun shoot
+    [SerializeField] float bulletSpread;         // how much the bullet deviates
+    public bool isAutoFire;                      // can hold down to shoot
 
     [Header("DBShotgun stats")]
     public Mesh DBShotgunMesh;
@@ -36,18 +36,18 @@ public class WeaponController : MonoBehaviour
     int doubleBarrelDmg = 10;
     int doubleBarrelKnockback = 10;
     int doubleBarrelBulletAmmount = 12;
-    float doubleBarrelProjectileSpeed = 20;        
+    float doubleBarrelProjectileSpeed = 50;        
     float doubleBarrelFireRate = 0.1f;
-    float doubleBarrelBulletSpread = 2f;           
+    float doubleBarrelBulletSpread = 0.5f;           
 
     [Header("RShotgun stats")]
     int repeaterAmmo = 6;
     int repeaterDmg = 10;
     int repeaterKnockback = 10;
     int repeaterBulletAmmount = 12;
-    float repeaterProjectileSpeed = 20;
+    float repeaterProjectileSpeed = 50;
     float repeaterFireRate = 0.1f;
-    float repeaterBulletSpread = 2f;
+    float repeaterBulletSpread = 0.5f;
 
     [Header("AutoPistol stats")]
 
@@ -78,6 +78,7 @@ public class WeaponController : MonoBehaviour
     void Update()
     {
         Graphics.DrawMesh(currentMesh, Matrix4x4.TRS(gunPos.position, gunPos.rotation, new Vector3(.5f, .5f, .5f)), gunMat, 3, null, 0);
+
     }
 
     public void SwitchWeapon()
@@ -95,6 +96,7 @@ public class WeaponController : MonoBehaviour
                 ammo = doubleBarrelAmmo;
                 damage = doubleBarrelDmg;
                 knockback = doubleBarrelKnockback;
+                projectilesPerShot = doubleBarrelBulletAmmount;
                 projectileSpeed = doubleBarrelProjectileSpeed;        
                 fireRate = doubleBarrelFireRate;              
                 bulletSpread = doubleBarrelBulletSpread;           
@@ -155,8 +157,10 @@ public class WeaponController : MonoBehaviour
 
     public void Fire()
     {
-        Debug.Log("BANG!");
-        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
+        if (weapon == Weapons.Melee) return;
+
+        //Debug.Log("BANG!");
+        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         Vector3 targetPos;
 
@@ -165,16 +169,18 @@ public class WeaponController : MonoBehaviour
 
         Vector3 bulletDirectrion = targetPos - bulletOrign.position;
 
-        float spreadX = Random.Range(-bulletSpread, bulletSpread);
-        float spreadY = Random.Range(-bulletSpread, bulletSpread);
 
-        Vector3 directionWithSpread = bulletDirectrion + new Vector3(spreadX, spreadY, 0f);
-        directionWithSpread = bulletDirectrion;
 
         for (int i = 0; i < projectilesPerShot; i++)
         {
+            float spreadX = Random.Range(-bulletSpread, bulletSpread);
+            float spreadY = Random.Range(-bulletSpread, bulletSpread);
+
+            Vector3 directionWithSpread = bulletDirectrion + new Vector3(spreadX, spreadY, 0f);
+            bulletDirectrion = directionWithSpread;
+
             GameObject currentBullet = Instantiate(bullet, bulletOrign.position, Quaternion.identity);
-            currentBullet.transform.forward = bulletDirectrion.normalized;
+            currentBullet.transform.right = bulletDirectrion.normalized;
             currentBullet.GetComponent<Rigidbody>().AddForce(bulletDirectrion.normalized * projectileSpeed, ForceMode.Impulse);
         }
 
@@ -187,17 +193,7 @@ public class WeaponController : MonoBehaviour
                 // toss weapon
                 SetMelee();
             }
-        }
-
-        if (isAutoFire)
-        {
-            // keep firing
-        }
-        else
-        {
-
-        }
-
+        }     
     }
 
     void ResetShot()
