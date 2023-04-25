@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5372228816592223332}
   - component: {fileID: 5777026993237395142}
   - component: {fileID: 7041327791593505407}
-  - component: {fileID: 5939185096131272288}
   m_Layer: 3
   m_Name: DBShotgun
   m_TagString: Untagged
@@ -33,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5372228816592223332
 MonoBehaviour:
@@ -4171,11 +4170,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &5939185096131272288
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9099774955476702706}
-  m_Mesh: {fileID: 0}

@@ -6,6 +6,7 @@ public class GrapplingHookControl : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] PlayerController PC;
+    [SerializeField] WeaponController WC;
     [SerializeField] LineRenderer LR;
     [SerializeField] Transform camTransform;
     [SerializeField] Transform hookTransform;
@@ -70,12 +71,20 @@ public class GrapplingHookControl : MonoBehaviour
             grapplePoint = hit.point;
             //Debug.Log(hit.point);
 
-            if (hit.transform.gameObject.layer == 7)
+            if (hit.transform.gameObject.layer == 7) // IF HIT ENEMY, TAKE GUN IF AVAILABLE
             {
                 Debug.Log("enemy");
-                PC.WC.weapon = hit.transform.gameObject.GetComponent<WeaponController>().weapon;
-                hit.transform.gameObject.GetComponent<WeaponController>().SetMelee();
-                Invoke(nameof(ExitGrapple), delay);
+                if (hit.transform.gameObject.GetComponent<WeaponController>().weapon != WeaponController.Weapons.Melee)
+                {
+                    WC.weapon = hit.transform.gameObject.GetComponent<WeaponController>().weapon;
+                    hit.transform.gameObject.GetComponent<WeaponController>().SetMelee();
+                    WC.SwitchWeapon();
+                }
+                else
+                {
+                    // pull enemy?
+                }
+                Invoke(nameof(ExitGrapple), delay); // if pulling enemy is a feature, move this line up to the if
             }
             else Invoke(nameof(Grapple), delay);
 

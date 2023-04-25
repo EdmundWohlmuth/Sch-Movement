@@ -48,9 +48,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float height;
     public LayerMask ground;
     [SerializeField] bool isGrounded;
-
-
     Vector3 moveDirection;
+
+    [Header("Gun Control")]
+    KeyCode shootKey = KeyCode.Mouse0;
 
     [Header("Refrences")]
     Rigidbody rb;
@@ -95,6 +96,10 @@ public class PlayerController : MonoBehaviour
             canJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCoolDown); // Invoke - runs meathods after x seconds           
+        }
+        if (Input.GetKeyDown(shootKey))
+        {
+            WC.Fire();
         }
     }
 

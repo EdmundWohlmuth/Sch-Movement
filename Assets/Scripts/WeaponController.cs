@@ -15,20 +15,23 @@ public class WeaponController : MonoBehaviour
         RPG,
         Melee // default
     }
+    [Header("Current Weapon Stats")]
     public Weapons weapon;
 
-    [Header("Current Weapon Stats")]
-    int maxAmmo;                // how many bullets gun has total
-    int ammo;                   // how many bullets gun has left
-    int damage;                 // damage gun deals
-    int knockback;              // how much the gun pushes player in air
-    int projectilesPerShot;     // how many bullets per shot (shotguns)
-    float projectileSpeed;        // how quick the bullets move
-    float fireRate;               // how quickly does the gun shoot
-    float bulletSpread;           // how much the bullet deviates
-    bool isAutoFire;            // can hold down to shoot
+    public Material gunMat;
+    [SerializeField] Mesh currentMesh;
+    [SerializeField] int maxAmmo;                // how many bullets gun has total
+    [SerializeField] int ammo;                   // how many bullets gun has left
+    [SerializeField] int damage;                 // damage gun deals
+    [SerializeField] int knockback;              // how much the gun pushes player in air
+    [SerializeField] int projectilesPerShot;     // how many bullets per shot (shotguns)
+    [SerializeField] float projectileSpeed;        // how quick the bullets move
+    [SerializeField] float fireRate;               // how quickly does the gun shoot
+    [SerializeField] float bulletSpread;           // how much the bullet deviates
+    [SerializeField] bool isAutoFire;            // can hold down to shoot
 
     [Header("DBShotgun stats")]
+    public Mesh DBShotgunMesh;
     int doubleBarrelAmmo = 2;
     int doubleBarrelDmg = 10;
     int doubleBarrelKnockback = 10;
@@ -60,6 +63,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] Camera mainCam;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform bulletOrign;
+    [SerializeField] Transform gunPos;
 
 
     [SerializeField] bool isAI;
@@ -73,7 +77,7 @@ public class WeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        Graphics.DrawMesh(currentMesh, Matrix4x4.TRS(gunPos.position, gunPos.rotation, new Vector3(.5f, .5f, .5f)), gunMat, 3, null, 0);
     }
 
     public void SwitchWeapon()
@@ -86,6 +90,7 @@ public class WeaponController : MonoBehaviour
         {
             case Weapons.DBShotgun:
 
+                Debug.Log("SHOT-GUN");
                 maxAmmo = doubleBarrelAmmo;
                 ammo = doubleBarrelAmmo;
                 damage = doubleBarrelDmg;
@@ -93,7 +98,8 @@ public class WeaponController : MonoBehaviour
                 projectileSpeed = doubleBarrelProjectileSpeed;        
                 fireRate = doubleBarrelFireRate;              
                 bulletSpread = doubleBarrelBulletSpread;           
-                isAutoFire = false;            
+                isAutoFire = false;
+                currentMesh = DBShotgunMesh;
 
                 break;
 
@@ -144,10 +150,12 @@ public class WeaponController : MonoBehaviour
     public void SetMelee()
     {
         weapon = Weapons.Melee;
+        currentMesh = null; // switch to melee mesh
     }
 
     public void Fire()
     {
+        Debug.Log("BANG!");
         Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.5f));
         RaycastHit hit;
         Vector3 targetPos;
