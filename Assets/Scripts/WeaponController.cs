@@ -80,7 +80,7 @@ public class WeaponController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SwitchWeapon();
     }
 
     // Update is called once per frame
@@ -100,7 +100,7 @@ public class WeaponController : MonoBehaviour
         {
             case Weapons.DBShotgun:
 
-                Debug.Log("SHOT-GUN");
+                //Debug.Log("SHOT-GUN");
                 maxAmmo = doubleBarrelAmmo;
                 ammo = doubleBarrelAmmo;
                 damage = doubleBarrelDmg;
