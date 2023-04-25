@@ -41,17 +41,26 @@ public class WeaponController : MonoBehaviour
     float doubleBarrelBulletSpread = 0.5f;           
 
     [Header("RShotgun stats")]
-    int repeaterAmmo = 6;
+    int repeaterAmmo = 5;
     int repeaterDmg = 10;
     int repeaterKnockback = 10;
-    int repeaterBulletAmmount = 12;
+    int repeaterBulletAmmount = 10;
     float repeaterProjectileSpeed = 50;
     float repeaterFireRate = 0.1f;
-    float repeaterBulletSpread = 0.5f;
+    float repeaterBulletSpread = 0.3f;
 
     [Header("AutoPistol stats")]
 
     [Header("Revolver stats")]
+
+    public Mesh RevolverMesh;
+    int revolverAmmo = 6;
+    int revolverDmg = 10;
+    int revolverKnockback = 6;
+    int revolverBulletAmmount = 1;
+    float revolverProjectileSpeed = 50;
+    float revolverFireRate = 0.5f;
+    float revolverBulletSpread = 0f;
 
     [Header("SMG stats")]
 
@@ -111,6 +120,7 @@ public class WeaponController : MonoBehaviour
                 ammo = repeaterAmmo;
                 damage = repeaterDmg;
                 knockback = repeaterKnockback;
+                projectilesPerShot = repeaterBulletAmmount;
                 projectileSpeed = repeaterProjectileSpeed;
                 fireRate = repeaterFireRate;
                 bulletSpread = repeaterBulletSpread;
@@ -122,6 +132,18 @@ public class WeaponController : MonoBehaviour
                 break;
 
             case Weapons.Revolver:
+
+                maxAmmo = revolverAmmo;
+                ammo = revolverAmmo;
+                damage = revolverDmg;
+                knockback = revolverKnockback;
+                projectilesPerShot = revolverBulletAmmount;
+                projectileSpeed = revolverProjectileSpeed;
+                fireRate = revolverFireRate;
+                bulletSpread = revolverBulletSpread;
+                isAutoFire = false;
+                currentMesh = RevolverMesh;
+
                 break;
 
             case Weapons.SMG:
@@ -168,8 +190,6 @@ public class WeaponController : MonoBehaviour
         else targetPos = ray.GetPoint(50);
 
         Vector3 bulletDirectrion = targetPos - bulletOrign.position;
-
-
 
         for (int i = 0; i < projectilesPerShot; i++)
         {

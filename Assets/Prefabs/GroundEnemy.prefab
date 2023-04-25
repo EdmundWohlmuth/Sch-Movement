@@ -147,7 +147,7 @@ Transform:
   m_Children:
   - {fileID: 1164277205379656777}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7119421403622230588
 MonoBehaviour:
@@ -173,10 +173,11 @@ MonoBehaviour:
   fireRate: 0
   bulletSpread: 0
   isAutoFire: 0
-  DBShotgunMesh: {fileID: 0}
+  DBShotgunMesh: {fileID: 2254999802832724347, guid: a6804c91c2484d941bbaafb05e9c9761,
+    type: 3}
   mainCam: {fileID: 0}
   bullet: {fileID: 0}
-  bulletOrign: {fileID: 0}
+  bulletOrign: {fileID: 6664332854957915137}
   gunPos: {fileID: 6664332854957915137}
   isAI: 1
 --- !u!136 &9054969485263315680
