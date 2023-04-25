@@ -23,9 +23,9 @@ public class WeaponController : MonoBehaviour
     int damage;                 // damage gun deals
     int knockback;              // how much the gun pushes player in air
     int projectilesPerShot;     // how many bullets per shot (shotguns)
-    int projectileSpeed;        // how quick the bullets move
-    int fireRate;               // how quickly does the gun shoot
-    int bulletSpread;           // how much the bullet deviates
+    float projectileSpeed;        // how quick the bullets move
+    float fireRate;               // how quickly does the gun shoot
+    float bulletSpread;           // how much the bullet deviates
     bool isAutoFire;            // can hold down to shoot
 
     [Header("DBShotgun stats")]
@@ -33,11 +33,18 @@ public class WeaponController : MonoBehaviour
     int doubleBarrelDmg = 10;
     int doubleBarrelKnockback = 10;
     int doubleBarrelBulletAmmount = 12;
+    float doubleBarrelProjectileSpeed = 20;        
+    float doubleBarrelFireRate = 0.1f;
+    float doubleBarrelBulletSpread = 2f;           
 
     [Header("RShotgun stats")]
     int repeaterAmmo = 6;
     int repeaterDmg = 10;
     int repeaterKnockback = 10;
+    int repeaterBulletAmmount = 12;
+    float repeaterProjectileSpeed = 20;
+    float repeaterFireRate = 0.1f;
+    float repeaterBulletSpread = 2f;
 
     [Header("AutoPistol stats")]
 
@@ -83,10 +90,23 @@ public class WeaponController : MonoBehaviour
                 ammo = doubleBarrelAmmo;
                 damage = doubleBarrelDmg;
                 knockback = doubleBarrelKnockback;
+                projectileSpeed = doubleBarrelProjectileSpeed;        
+                fireRate = doubleBarrelFireRate;              
+                bulletSpread = doubleBarrelBulletSpread;           
+                isAutoFire = false;            
 
                 break;
 
             case Weapons.RShotgun:
+
+                maxAmmo = repeaterAmmo;
+                ammo = repeaterAmmo;
+                damage = repeaterDmg;
+                knockback = repeaterKnockback;
+                projectileSpeed = repeaterProjectileSpeed;
+                fireRate = repeaterFireRate;
+                bulletSpread = repeaterBulletSpread;
+                isAutoFire = false;
 
                 break;
 
