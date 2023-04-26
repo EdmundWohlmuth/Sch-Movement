@@ -7,10 +7,6 @@ public class PlayerController : MonoBehaviour
     // CHARACTER CONTROLLER BY: "DAVE / GAME DEVLOPEMENT" https://www.youtube.com/@davegamedevelopment
     // WITH EDITS BY EDMUND WOHLMUTH
 
-    //NOTES --
-    // PLAYER CANNOT JUMP OFF THE WALLS, BOOLEANS ARE BROKEN OR SOMETHING
-    // https://youtu.be/WfW0k5qENxM?t=146 link to the video, timestamped
-
     [Header("Movement")]
     [SerializeField] float speed;
     [SerializeField] float speedModifier;

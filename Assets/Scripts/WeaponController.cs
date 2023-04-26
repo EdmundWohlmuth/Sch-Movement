@@ -217,6 +217,7 @@ public class WeaponController : MonoBehaviour
 
             GameObject currentBullet = Instantiate(bullet, bulletOrign.position, Quaternion.identity);
             currentBullet.transform.right = bulletDirectrion.normalized;
+            currentBullet.GetComponent<Bullet>().damage = damage;
             currentBullet.GetComponent<Rigidbody>().AddForce(bulletDirectrion.normalized * projectileSpeed, ForceMode.Impulse);
         }
 
