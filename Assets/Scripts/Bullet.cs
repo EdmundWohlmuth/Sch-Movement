@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public int damage;
+    float destoryTimer = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -15,7 +16,11 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (destoryTimer <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else destoryTimer -= Time.deltaTime;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -25,9 +30,16 @@ public class Bullet : MonoBehaviour
             // create an effect on hit point
             Destroy(gameObject);
         }
-        else if (collision.gameObject.layer == 7 || collision.gameObject.layer == 6)
+        else if (collision.gameObject.layer == 7)
         {
             // Deal damage
+            //Debug.Log("hit Enemy");
+            Destroy(gameObject);          
+        }
+        else if (collision.gameObject.layer == 6)
+        {
+            // Deal damage
+            //Debug.Log("hit Player");
             Destroy(gameObject);
         }
         

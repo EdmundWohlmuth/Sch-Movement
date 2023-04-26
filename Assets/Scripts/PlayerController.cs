@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
     //-WALLRUNNING------
     void StartWallRun()
     {
-        Debug.Log("Wall Running!");
+        //Debug.Log("Wall Running!");
         wallRunning = true;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // might want to disable this
     }
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
     }
     void StopWallRun()
     {
-        Debug.Log("Stop Wall Running");
+        //Debug.Log("Stop Wall Running");
         wallRunning = false;
         rb.useGravity = true;
     }
@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(jumpKey))
             {
-                Debug.Log("Wall Jump!");
+                //Debug.Log("Wall Jump!");
                 StopWallRun();
                 WallJump();
             }           
@@ -228,5 +228,11 @@ public class PlayerController : MonoBehaviour
         {
             if (wallRunning) StopWallRun();
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawCube(gameObject.transform.position, new Vector3(1, 2, 1));
     }
 }

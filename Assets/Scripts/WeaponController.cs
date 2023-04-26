@@ -29,6 +29,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float fireRate;             // how quickly does the gun shoot
     [SerializeField] float bulletSpread;         // how much the bullet deviates
     public bool isAutoFire;                      // can hold down to shoot
+    [SerializeField] float fireRateTimer;
+    [SerializeField] float reloadTimer;
 
     [Header("DBShotgun stats")]
     public Mesh DBShotgunMesh;
@@ -37,7 +39,7 @@ public class WeaponController : MonoBehaviour
     int doubleBarrelKnockback = 10;
     int doubleBarrelBulletAmmount = 12;
     float doubleBarrelProjectileSpeed = 50;        
-    float doubleBarrelFireRate = 0.1f;
+    float doubleBarrelFireRate = 0.25f;
     float doubleBarrelBulletSpread = 0.5f;           
 
     [Header("RShotgun stats")]
@@ -76,6 +78,8 @@ public class WeaponController : MonoBehaviour
 
 
     [SerializeField] bool isAI;
+    [SerializeField] bool canShoot;
+    [SerializeField] bool AINeedsToReload;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +92,8 @@ public class WeaponController : MonoBehaviour
     {
         Graphics.DrawMesh(currentMesh, Matrix4x4.TRS(gunPos.position, gunPos.rotation, new Vector3(.5f, .5f, .5f)), gunMat, 3, null, 0);
 
+        if (!canShoot) ResetShot();
+        if (isAI && AINeedsToReload) AIAmmoTrack();
     }
 
     public void SwitchWeapon()
@@ -111,6 +117,7 @@ public class WeaponController : MonoBehaviour
                 bulletSpread = doubleBarrelBulletSpread;           
                 isAutoFire = false;
                 currentMesh = DBShotgunMesh;
+                canShoot = true;
 
                 break;
 
@@ -125,6 +132,7 @@ public class WeaponController : MonoBehaviour
                 fireRate = repeaterFireRate;
                 bulletSpread = repeaterBulletSpread;
                 isAutoFire = false;
+                canShoot = true;
 
                 break;
 
@@ -143,6 +151,7 @@ public class WeaponController : MonoBehaviour
                 bulletSpread = revolverBulletSpread;
                 isAutoFire = false;
                 currentMesh = RevolverMesh;
+                canShoot = true;
 
                 break;
 
@@ -180,9 +189,15 @@ public class WeaponController : MonoBehaviour
     public void Fire()
     {
         if (weapon == Weapons.Melee) return;
+        if (!canShoot || isAI && AINeedsToReload && AINeedsToReload) return;
 
         //Debug.Log("BANG!");
-        Ray ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+        Ray ray;
+
+        if (!isAI) ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // player uses camera
+        else ray = new Ray(gunPos.transform.position, gunPos.transform.forward); // enemy uses gun pos
+
         RaycastHit hit;
         Vector3 targetPos;
 
@@ -213,12 +228,48 @@ public class WeaponController : MonoBehaviour
                 // toss weapon
                 SetMelee();
             }
-        }     
+        }
+        else
+        {
+            ammo--;
+            if (ammo <= 0)
+            {
+                reloadTimer = 0;
+                AINeedsToReload = true;
+            }               
+        }
+        fireRateTimer = 0;
+        canShoot = false;
+    }
+
+    void AIAmmoTrack()
+    {
+        if (reloadTimer >= 4) // hardcoded "reload" timer for ai
+        {
+            reloadTimer = 4;
+            AINeedsToReload = false;
+            ammo = maxAmmo;
+        }
+        else
+        {
+            reloadTimer += Time.deltaTime;
+            AINeedsToReload = true;
+            canShoot = false;
+        }
     }
 
     void ResetShot()
     {
-
+        if (fireRateTimer >= fireRate)
+        {
+            fireRateTimer = fireRate;
+            canShoot = true;
+        }
+        else
+        {
+            fireRateTimer += Time.deltaTime;
+            canShoot = false;
+        }
     }
 
     public void Melee()
