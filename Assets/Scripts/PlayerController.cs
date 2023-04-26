@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     bool shooting;
 
     [Header("Refrences")]
-    Rigidbody rb;
+    public Rigidbody rb;
     public GameObject cam;
     public GrapplingHookControl GHC;
     public Transform orientation;
@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         if (wallRunning) WallRunningMovement();
         else MovePlayer();
+        //Debug.Log(rb.velocity.normalized);
     }
 
     void PlayerInput()
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey(jumpKey) && canJump && isGrounded)
+        if (Input.GetKey(jumpKey) && canJump && isGrounded) // might alter this to make Bhopping more difficult
         {
             canJump = false;
             Jump();
@@ -104,6 +105,7 @@ public class PlayerController : MonoBehaviour
         if (shooting)
         {
             WC.Fire();
+            if (!isGrounded) rb.AddForce(-cam.transform.forward * WC.knockback,  ForceMode.Impulse);
         }
     }
 
@@ -122,8 +124,10 @@ public class PlayerController : MonoBehaviour
 
         if (flatVel.magnitude > speed && isGrounded)
         {
-            Vector3 clampVel = flatVel.normalized * speed;
-            rb.velocity = new Vector3(clampVel.x, rb.velocity.y, clampVel.z);
+            /*Vector3 clampVel = flatVel.normalized * speed;
+            rb.velocity = new Vector3(clampVel.x, rb.velocity.y, clampVel.z);*/
+
+            rb.velocity = Vector3.MoveTowards(rb.velocity, Vector3.zero, 1.5f * Time.fixedDeltaTime);
         }
     }
 

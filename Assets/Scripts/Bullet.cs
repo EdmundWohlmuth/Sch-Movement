@@ -39,7 +39,7 @@ public class Bullet : MonoBehaviour
         else if (collision.gameObject.layer == 6)
         {
             // Deal damage
-            //Debug.Log("hit Player");
+            Debug.Log("hit Player");
             Destroy(gameObject);
         }
         

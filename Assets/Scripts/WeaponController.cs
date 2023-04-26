@@ -23,20 +23,21 @@ public class WeaponController : MonoBehaviour
     [SerializeField] int maxAmmo;                // how many bullets gun has total
     [SerializeField] int ammo;                   // how many bullets gun has left
     [SerializeField] int damage;                 // damage gun deals
-    [SerializeField] int knockback;              // how much the gun pushes player in air
+    public int knockback;                        // how much the gun pushes player in air
     [SerializeField] int projectilesPerShot;     // how many bullets per shot (shotguns)
     [SerializeField] float projectileSpeed;      // how quick the bullets move
     [SerializeField] float fireRate;             // how quickly does the gun shoot
     [SerializeField] float bulletSpread;         // how much the bullet deviates
     public bool isAutoFire;                      // can hold down to shoot
+
     [SerializeField] float fireRateTimer;
     [SerializeField] float reloadTimer;
 
     [Header("DBShotgun stats")]
     public Mesh DBShotgunMesh;
     int doubleBarrelAmmo = 2;
-    int doubleBarrelDmg = 10;
-    int doubleBarrelKnockback = 10;
+    int doubleBarrelDmg = 3;
+    int doubleBarrelKnockback = 20;
     int doubleBarrelBulletAmmount = 12;
     float doubleBarrelProjectileSpeed = 50;        
     float doubleBarrelFireRate = 0.25f;
@@ -44,7 +45,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("RShotgun stats")]
     int repeaterAmmo = 5;
-    int repeaterDmg = 10;
+    int repeaterDmg = 2;
     int repeaterKnockback = 10;
     int repeaterBulletAmmount = 10;
     float repeaterProjectileSpeed = 50;
@@ -244,9 +245,9 @@ public class WeaponController : MonoBehaviour
 
     void AIAmmoTrack()
     {
-        if (reloadTimer >= 4) // hardcoded "reload" timer for ai
+        if (reloadTimer >= 2) // hardcoded "reload" timer for ai
         {
-            reloadTimer = 4;
+            reloadTimer = 2;
             AINeedsToReload = false;
             ammo = maxAmmo;
         }

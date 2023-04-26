@@ -118,7 +118,7 @@ public class AIController : MonoBehaviour
         //Gizmos.color = Color.yellow;
         //Gizmos.DrawWireSphere(transform.position, sightRange);
 
-        if (lineOfSight && !obstructedSight)
+        /*if (lineOfSight && !obstructedSight)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(transform.position, player.transform.position);
@@ -132,10 +132,10 @@ public class AIController : MonoBehaviour
         {
             Gizmos.color = Color.gray;
             Gizmos.DrawLine(transform.position, player.transform.position);
-        }
+        }*/
 
         Gizmos.color = Color.magenta;
-        Gizmos.DrawSphere(agent.destination, 0.2f);
+        Gizmos.DrawSphere(agent.destination, 0.35f);
     }
 
 }

@@ -11,6 +11,7 @@ public class GrapplingHookControl : MonoBehaviour
     [SerializeField] Transform camTransform;
     [SerializeField] Transform hookTransform;
     [SerializeField] Camera cam;
+    Rigidbody rb;
 
     public LayerMask grappleable;
 
@@ -20,6 +21,7 @@ public class GrapplingHookControl : MonoBehaviour
     [SerializeField] float coolDown;
     [SerializeField] float coolDownTimer;
     [SerializeField] float overshootYAxis;
+    [SerializeField] float maximumVelocity;
     Vector3 velocityToSet;
 
     Vector3 grapplePoint;
@@ -33,6 +35,7 @@ public class GrapplingHookControl : MonoBehaviour
     void Start()
     {
         PC = GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -49,7 +52,7 @@ public class GrapplingHookControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space) && grappling)
         {
-            Invoke(nameof(ExitGrapple), delay);
+            Invoke(nameof(ExitGrapple), delay); // COROUTINES
         }
     }
     void LateUpdate()
@@ -146,7 +149,10 @@ public class GrapplingHookControl : MonoBehaviour
     private void SetVelocity()
     {
         //enableMovementOnNextTouch = true;
-        GetComponent<Rigidbody>().velocity = velocityToSet;
+        if (rb.velocity.magnitude > 4) velocityToSet *= 1.75f;
+        rb.velocity += velocityToSet;
+        if (rb.velocity.magnitude > maximumVelocity)
+            rb.velocity = rb.velocity.normalized * maximumVelocity;
 
         //cam.DoFov(grappleFov);
     }
