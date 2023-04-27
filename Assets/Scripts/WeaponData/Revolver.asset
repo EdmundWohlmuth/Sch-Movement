@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5f58d933349ad488a12d256af73df2, type: 3}
+  m_Name: Revolver
+  m_EditorClassIdentifier: 
+  weaponType: 3
+  gunMat: {fileID: -6202392741857895490, guid: a6804c91c2484d941bbaafb05e9c9761, type: 3}
+  currentMesh: {fileID: -4167287341304927201, guid: e7b58efaf4e64584e88bb63c3407c9c1,
+    type: 3}
+  maxAmmo: 6
+  ammo: 6
+  damage: 15
+  knockback: 8
+  projectilesPerShot: 1
+  projectileSpeed: 20
+  fireRate: 1.25
+  bulletSpread: 0
+  isAutoFire: 0

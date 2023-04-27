@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         GHC = GetComponent<GrapplingHookControl>();
-        rb.freezeRotation = true;
+        rb.freezeRotation = true;       
     }
 
     // Update is called once per frame
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     void PlayerInput()
     {
-        if (WC.isAutoFire) shooting = Input.GetKey(KeyCode.Mouse0);
+        if (WC.weaponData != null && WC.weaponData.isAutoFire) shooting = Input.GetKey(KeyCode.Mouse0);
         else shooting = Input.GetKeyDown(KeyCode.Mouse0);
 
         // if (Input.GetAxisRaw("Horizontal") == 1) Debug.Log("horizontal");
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
         if (shooting)
         {
             WC.Fire();
-            if (!isGrounded) rb.AddForce(-cam.transform.forward * WC.knockback,  ForceMode.Impulse);
+            if (!isGrounded) rb.AddForce(-cam.transform.forward * WC.weaponData.knockback,  ForceMode.Impulse);
         }
     }
 

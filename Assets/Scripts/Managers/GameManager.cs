@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     public static Camera mainCam;
+    public List<WeaponData> weaponType = new List<WeaponData>();
 
     private void Awake()
     {
