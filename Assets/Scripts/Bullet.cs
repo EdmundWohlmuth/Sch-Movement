@@ -26,19 +26,23 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 0)
-        {
+        {           
             // create an effect on hit point
             Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 7)
         {
             // Deal damage
+            collision.gameObject.GetComponent<HealthController>().TakeDamage(damage);
+
             //Debug.Log("hit Enemy");
             Destroy(gameObject);          
         }
         else if (collision.gameObject.layer == 6)
         {
             // Deal damage
+            collision.gameObject.GetComponent<HealthController>().TakeDamage(damage);
+
             Debug.Log("hit Player");
             Destroy(gameObject);
         }

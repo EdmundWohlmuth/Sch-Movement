@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 9054969485263315680}
   - component: {fileID: 5258629659348322017}
   - component: {fileID: 7778025577789236475}
+  - component: {fileID: 9041167184441493818}
   m_Layer: 7
   m_Name: GroundEnemy
   m_TagString: Untagged
@@ -207,6 +208,8 @@ MonoBehaviour:
   fireRate: 0
   bulletSpread: 0
   isAutoFire: 0
+  fireRateTimer: 0
+  reloadTimer: 0
   DBShotgunMesh: {fileID: 2254999802832724347, guid: a6804c91c2484d941bbaafb05e9c9761,
     type: 3}
   RevolverMesh: {fileID: -4167287341304927201, guid: e7b58efaf4e64584e88bb63c3407c9c1,
@@ -285,3 +288,19 @@ MonoBehaviour:
     m_Bits: 1
   agent: {fileID: 5258629659348322017}
   gunPos: {fileID: 664126424924250659}
+--- !u!114 &9041167184441493818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5519055024539078863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49093f2c68f438141b98198f66217fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAI: 1
+  health: 15
+  maxHelath: 15
+  healthBar: {fileID: 0}
