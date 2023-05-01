@@ -96,12 +96,11 @@ public class PlayerController : MonoBehaviour
         {
             canJump = false;
             Jump();
-            Invoke(nameof(ResetJump), jumpCoolDown); // Invoke - runs meathods after x seconds           
+            StartCoroutine(WaitforJump(jumpCoolDown)); // Invoke - runs meathods after x seconds           
         }
         if (shooting)
         {
             WC.Fire();
-            if (!isGrounded) rb.AddForce(-cam.transform.forward * WC.weaponData.knockback,  ForceMode.Impulse);
         }
     }
 
@@ -168,6 +167,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Recoil()
+    {
+        if (!isGrounded) rb.AddForce(-cam.transform.forward * WC.weaponData.knockback, ForceMode.Impulse);
+    }
+
     //-JUMP-CONTROLS----
     void Jump()
     {
@@ -228,6 +232,12 @@ public class PlayerController : MonoBehaviour
         {
             if (wallRunning) StopWallRun();
         }
+    }
+
+    IEnumerator WaitforJump(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        ResetJump();
     }
 
     private void OnDrawGizmos()

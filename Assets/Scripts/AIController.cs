@@ -45,6 +45,8 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (WC.weapon == WeaponController.Weapons.Melee) currentState = state.missingGun;
+
         sightCheck = Physics.CheckSphere(transform.position, sightRange, playerMask);
         lineOfSight = Physics.Raycast(transform.position, player.transform.position - transform.position, sightRange, playerMask);
         obstructedSight = Physics.Raycast(transform.position, player.transform.position - transform.position, sightRange, obstrutionMask);
@@ -102,10 +104,53 @@ public class AIController : MonoBehaviour
                 break;
 
             case state.missingGun:
+
+
                 break;
 
             default:
 
+                break;
+        }
+    }
+
+    void OnStartedState(state state)
+    {
+        switch (state)
+        {
+            case state.idle:
+                break;
+
+            case state.chase:
+                break;
+
+            case state.attack:
+                break;
+
+            case state.missingGun:
+                break;
+
+            default:
+                break;
+        }
+    }
+    void OnEndedState(state state)
+    {
+        switch (state)
+        {
+            case state.idle:
+                break;
+
+            case state.chase:
+                break;
+
+            case state.attack:
+                break;
+
+            case state.missingGun:
+                break;
+
+            default:
                 break;
         }
     }

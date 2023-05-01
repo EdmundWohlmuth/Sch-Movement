@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec5f58d933349ad488a12d256af73df2, type: 3}
   m_Name: SubMachineGun
   m_EditorClassIdentifier: 
-  weaponType: 0
-  gunMat: {fileID: 0}
-  currentMesh: {fileID: 0}
-  maxAmmo: 0
-  ammo: 0
-  damage: 0
-  knockback: 0
-  projectilesPerShot: 0
-  projectileSpeed: 0
-  fireRate: 0
-  bulletSpread: 0
+  weaponType: 4
+  gunMat: {fileID: -6202392741857895490, guid: a6804c91c2484d941bbaafb05e9c9761, type: 3}
+  currentMesh: {fileID: -5939715470075842565, guid: bef44a1028a466e45920b7eb7d8e3e16,
+    type: 3}
+  maxAmmo: 20
+  damage: 5
+  knockback: 6
+  projectilesPerShot: 1
+  projectileSpeed: 50
+  fireRate: 0.2
+  bulletSpread: 0.2
   isAutoFire: 1

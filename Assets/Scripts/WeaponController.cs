@@ -26,6 +26,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform bulletOrign;
     [SerializeField] Transform gunPos;
+    [SerializeField] PlayerController PC;
 
     [Header("Weapon handling")]
     [SerializeField] bool isAI;
@@ -37,6 +38,7 @@ public class WeaponController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!isAI) PC = GetComponent<PlayerController>();
         SwitchWeapon();       
     }
 
@@ -118,6 +120,7 @@ public class WeaponController : MonoBehaviour
 
                 SetMelee();
             }
+            PC.Recoil();
         }
         else
         {
@@ -126,7 +129,7 @@ public class WeaponController : MonoBehaviour
             {
                 reloadTimer = 0;
                 AINeedsToReload = true;
-            }               
+            } 
         }
         fireRateTimer = 0;
         canShoot = false;
