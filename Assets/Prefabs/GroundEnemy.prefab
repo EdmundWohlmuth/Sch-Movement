@@ -197,30 +197,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: 0
-  gunMat: {fileID: -6202392741857895490, guid: a6804c91c2484d941bbaafb05e9c9761, type: 3}
-  currentMesh: {fileID: 0}
-  maxAmmo: 0
+  weaponData: {fileID: 0}
   ammo: 0
-  damage: 0
-  knockback: 0
-  projectilesPerShot: 0
-  projectileSpeed: 0
-  fireRate: 0
-  bulletSpread: 0
-  isAutoFire: 0
-  fireRateTimer: 0
-  reloadTimer: 0
-  DBShotgunMesh: {fileID: 2254999802832724347, guid: a6804c91c2484d941bbaafb05e9c9761,
-    type: 3}
-  RevolverMesh: {fileID: -4167287341304927201, guid: e7b58efaf4e64584e88bb63c3407c9c1,
-    type: 3}
   mainCam: {fileID: 0}
   bullet: {fileID: 6594084159456659013, guid: b787e18a3df398e4f9ffec109fe7d5d8, type: 3}
   bulletOrign: {fileID: 6664332854957915137}
   gunPos: {fileID: 6664332854957915137}
+  PC: {fileID: 0}
   isAI: 1
   canShoot: 0
   AINeedsToReload: 0
+  fireRateTimer: 0
+  reloadTimer: 0
 --- !u!136 &9054969485263315680
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -278,8 +266,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e43f1d05d446604a9590decda61a203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 25
-  sightRange: 40
+  attackRange: 40
+  sightRange: 60
   playerMask:
     serializedVersion: 2
     m_Bits: 64

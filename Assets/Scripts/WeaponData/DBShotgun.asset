@@ -23,4 +23,5 @@ MonoBehaviour:
   projectileSpeed: 50
   fireRate: 0.25
   bulletSpread: 0.5
+  camShake: 1
   isAutoFire: 0

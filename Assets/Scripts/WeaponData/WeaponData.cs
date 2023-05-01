@@ -16,5 +16,6 @@ public class WeaponData : ScriptableObject
     public float projectileSpeed;                   // how quick the bullets move
     public float fireRate;                          // how quickly does the gun shoot
     public float bulletSpread;                      // how much the bullet deviates
+    public float camShake;
     public bool isAutoFire;                         // can hold down to shoot
 }

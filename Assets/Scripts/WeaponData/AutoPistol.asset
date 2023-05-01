@@ -21,6 +21,7 @@ MonoBehaviour:
   knockback: 4
   projectilesPerShot: 1
   projectileSpeed: 50
-  fireRate: 0.25
+  fireRate: 0.35
   bulletSpread: 0.1
+  camShake: 0.1
   isAutoFire: 1

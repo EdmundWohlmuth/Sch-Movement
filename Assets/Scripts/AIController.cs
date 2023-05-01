@@ -31,6 +31,11 @@ public class AIController : MonoBehaviour
     WeaponController WC;
     [SerializeField] GameObject gunPos;
 
+    private void OnEnable()
+    {
+        GameManager.currentEnemies.Add(gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {

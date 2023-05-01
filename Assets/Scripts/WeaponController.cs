@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class WeaponController : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] Camera mainCam;
+    [SerializeField] Camera gunCam;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform bulletOrign;
     [SerializeField] Transform gunPos;
@@ -79,13 +81,13 @@ public class WeaponController : MonoBehaviour
         if (weapon == Weapons.Melee) return;
         if (!canShoot || isAI && AINeedsToReload && AINeedsToReload) return;
 
-        Debug.Log("BANG!");
+        //Debug.Log("BANG!");
 
         //Debug.Log("BANG!");
 
         Ray ray;
 
-        if (!isAI) ray = mainCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // player uses camera
+        if (!isAI) ray = gunCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); // player uses camera
         else ray = new Ray(gunPos.transform.position, gunPos.transform.forward); // enemy uses gun pos
 
         RaycastHit hit;
@@ -121,6 +123,8 @@ public class WeaponController : MonoBehaviour
                 SetMelee();
             }
             PC.Recoil();
+            mainCam.DOShakePosition(0.25f, weaponData.camShake, 10, 30);
+
         }
         else
         {

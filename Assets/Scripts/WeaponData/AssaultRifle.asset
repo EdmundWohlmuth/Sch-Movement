@@ -18,9 +18,10 @@ MonoBehaviour:
     type: 3}
   maxAmmo: 30
   damage: 8
-  knockback: 2
+  knockback: 5
   projectilesPerShot: 1
   projectileSpeed: 50
-  fireRate: 0.35
+  fireRate: 0.25
   bulletSpread: 0.1
+  camShake: 0.15
   isAutoFire: 1

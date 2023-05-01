@@ -240,6 +240,12 @@ public class PlayerController : MonoBehaviour
         ResetJump();
     }
 
+    //-EXTRA-SFX-----------------
+    public void CameraShake()
+    {
+
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;

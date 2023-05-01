@@ -28,7 +28,11 @@ public class HealthController : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            if (isAI) Destroy(gameObject);
+            if (isAI) 
+            {
+                GameManager.currentEnemies.Remove(gameObject);
+                Destroy(gameObject);
+            }          
             else GameManager.gameManager.GameOver();
         }
     }

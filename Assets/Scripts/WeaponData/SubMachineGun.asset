@@ -17,10 +17,11 @@ MonoBehaviour:
   currentMesh: {fileID: -5939715470075842565, guid: bef44a1028a466e45920b7eb7d8e3e16,
     type: 3}
   maxAmmo: 20
-  damage: 5
-  knockback: 6
+  damage: 3
+  knockback: 4
   projectilesPerShot: 1
   projectileSpeed: 50
-  fireRate: 0.2
+  fireRate: 0.15
   bulletSpread: 0.2
+  camShake: 0.1
   isAutoFire: 1
