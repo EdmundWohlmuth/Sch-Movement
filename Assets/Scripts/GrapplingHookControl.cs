@@ -68,7 +68,7 @@ public class GrapplingHookControl : MonoBehaviour
         grappling = true;
 
         RaycastHit hit;
-        if (Physics.Raycast(camTransform.position, camTransform.forward, out hit, maxDist, grappleable))
+        if (Physics.SphereCast(camTransform.position, .5f, camTransform.forward, out hit, maxDist, grappleable))
         {
             //Debug.Log("hit");
             grapplePoint = hit.point;

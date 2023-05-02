@@ -12,6 +12,10 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         Physics.IgnoreLayerCollision(8, 8); 
+
+        if (isAI) Physics.IgnoreLayerCollision(8, 7);
+        else Physics.IgnoreLayerCollision(8, 6);
+ 
     }
 
     // Update is called once per frame

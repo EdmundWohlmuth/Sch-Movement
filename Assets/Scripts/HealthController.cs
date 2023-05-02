@@ -9,6 +9,11 @@ public class HealthController : MonoBehaviour
     public int health;
     public int maxHelath;
 
+    [Header("TEMP MATS")]
+    public Renderer renderer;
+    public Material basicMat;
+    public Material damagedMat;
+
     public Slider healthBar;
 
     // Start is called before the first frame update
@@ -18,6 +23,8 @@ public class HealthController : MonoBehaviour
         else if (gameObject.GetComponent<PlayerController>()) isAI = false;
 
         health = maxHelath;
+
+        renderer = GetComponentInChildren<Renderer>();
     }
 
     public void TakeDamage(int damage)
@@ -35,6 +42,8 @@ public class HealthController : MonoBehaviour
             }          
             else GameManager.gameManager.GameOver();
         }
+
+        if (isAI) StartCoroutine(Damage());
     }
 
     public void Heal(int healing)
@@ -51,5 +60,12 @@ public class HealthController : MonoBehaviour
     public void ResetHealth()
     {
         health = maxHelath;
+    }
+
+    IEnumerator Damage()
+    {
+        renderer.material = damagedMat;
+        yield return new WaitForSeconds(.2f);
+        renderer.material = basicMat;
     }
 }

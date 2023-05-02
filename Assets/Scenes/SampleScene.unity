@@ -5614,7 +5614,7 @@ PrefabInstance:
     - target: {fileID: 7119421403622230588, guid: 3daa2584fbff55e48a582b62adc41b35,
         type: 3}
       propertyPath: weapon
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22742,6 +22742,9 @@ MonoBehaviour:
   isAI: 0
   health: 100
   maxHelath: 100
+  renderer: {fileID: 0}
+  basicMat: {fileID: 0}
+  damagedMat: {fileID: 0}
   healthBar: {fileID: 1170129384}
 --- !u!1 &1363709086
 GameObject:
@@ -28132,7 +28135,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-132490
+  m_Name: pb_Mesh28138
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2

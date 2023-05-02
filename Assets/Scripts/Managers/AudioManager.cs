@@ -48,7 +48,7 @@ public class AudioManager : MonoBehaviour
         source.clip = clip;
         // volume stuff here
         source.Play();
-        Debug.Log("Sound played");
+        //Debug.Log("Sound played");
     }
 
     public void StopSound(AudioSource source)

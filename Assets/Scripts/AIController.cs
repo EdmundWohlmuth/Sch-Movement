@@ -30,6 +30,7 @@ public class AIController : MonoBehaviour
     [SerializeField] NavMeshAgent agent;
     WeaponController WC;
     [SerializeField] GameObject gunPos;
+    [SerializeField] GameObject pos;
 
     private void OnEnable()
     {
@@ -52,9 +53,9 @@ public class AIController : MonoBehaviour
     {
         if (WC.weapon == WeaponController.Weapons.Melee) currentState = state.missingGun;
 
-        sightCheck = Physics.CheckSphere(transform.position, sightRange, playerMask);
-        lineOfSight = Physics.Raycast(transform.position, player.transform.position - transform.position, sightRange, playerMask);
-        obstructedSight = Physics.Raycast(transform.position, player.transform.position - transform.position, sightRange, obstrutionMask);
+        sightCheck = Physics.CheckSphere(pos.transform.position, sightRange, playerMask);
+        lineOfSight = Physics.Raycast(pos.transform.position, player.transform.position - transform.position, sightRange, playerMask);
+        obstructedSight = Physics.Raycast(pos.transform.position, player.transform.position - transform.position, sightRange, obstrutionMask);
 
         //-STATE-MACHINE-------
         switch (currentState)
@@ -62,10 +63,11 @@ public class AIController : MonoBehaviour
             case state.idle:
 
                 if (lineOfSight && sightCheck && !obstructedSight)
-                {
+                {                   
                     currentState = state.chase;
                 }
-                              
+                Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.blue);
+
                 break;
 
             case state.chase:
@@ -88,6 +90,16 @@ public class AIController : MonoBehaviour
                         currentState = state.attack;
                     }
                 }
+                else
+                {
+                    Vector3 playerPos = new Vector3((player.transform.position.x), 0f, (player.transform.position.z));
+                    gameObject.transform.LookAt(playerPos);
+                    if (attackCheck && lineOfSight)
+                    {
+                        currentState = state.attack;
+                    }
+                }
+                Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.black);
 
                 break;
 
@@ -105,6 +117,7 @@ public class AIController : MonoBehaviour
                 {
                     currentState = state.chase;
                 }
+                Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.red);
 
                 break;
 
@@ -168,20 +181,20 @@ public class AIController : MonoBehaviour
         //Gizmos.color = Color.yellow;
         //Gizmos.DrawWireSphere(transform.position, sightRange);
 
-        /*if (lineOfSight && !obstructedSight)
+/*        if (lineOfSight && !obstructedSight)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, player.transform.position);
+            Gizmos.DrawLine(pos.transform.position, player.transform.position);
         }
         else if (obstructedSight)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawRay(transform.position, player.transform.position - transform.position);
+            Gizmos.DrawRay(pos.transform.position, player.transform.position);
         }
         else if (!sightCheck)
         {
             Gizmos.color = Color.gray;
-            Gizmos.DrawLine(transform.position, player.transform.position);
+            Gizmos.DrawLine(pos.transform.position, player.transform.position);
         }*/
 
         Gizmos.color = Color.magenta;

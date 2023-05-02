@@ -169,6 +169,7 @@ public class PlayerController : MonoBehaviour
 
     public void Recoil()
     {
+        if (WC.weaponData == null) return;
         if (!isGrounded) rb.AddForce(-cam.transform.forward * WC.weaponData.knockback, ForceMode.Impulse);
     }
 

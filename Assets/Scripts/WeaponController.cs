@@ -83,6 +83,7 @@ public class WeaponController : MonoBehaviour
     {
         if (weapon == Weapons.Melee) return;
         if (!canShoot || isAI && AINeedsToReload && AINeedsToReload) return;
+        if (weaponData == null) return;
 
         //Debug.Log("BANG!");
 
@@ -115,7 +116,7 @@ public class WeaponController : MonoBehaviour
             currentBullet.GetComponent<Rigidbody>().AddForce(bulletDirectrion.normalized * weaponData.projectileSpeed, ForceMode.Impulse);
         }
 
-        AudioManager.audioManager.PlaySound(source, weaponData.sound, false);
+        if (weaponData != null) AudioManager.audioManager.PlaySound(source, weaponData.sound, false);
         if (!isAI)
         {
             ammo--;
@@ -127,7 +128,7 @@ public class WeaponController : MonoBehaviour
                 SetMelee();
             }
             PC.Recoil();           
-            mainCam.DOShakePosition(0.25f, weaponData.camShake, 10, 30);           
+            if (weaponData != null) mainCam.DOShakePosition(0.25f, weaponData.camShake, 10, 30);           
         }
         else
         {
@@ -148,7 +149,7 @@ public class WeaponController : MonoBehaviour
         {
             reloadTimer = 2;
             AINeedsToReload = false;
-            ammo = weaponData.maxAmmo;
+            if (weaponData != null) ammo = weaponData.maxAmmo;
         }
         else
         {

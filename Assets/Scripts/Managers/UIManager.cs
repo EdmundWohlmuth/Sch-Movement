@@ -9,13 +9,13 @@ public class UIManager : MonoBehaviour
     public static UIManager uIManager;
 
     [Header("User Interface Screens")]
-    public Canvas MainMenu;
+    //public Canvas MainMenu;
     public Canvas GamePlay;
-    public Canvas Loose;
-    public Canvas Save;
-    public Canvas Pause;
-    public Canvas NewGame;
-    public Canvas Win;
+    //public Canvas Loose;
+    //public Canvas Save;
+    //public Canvas Pause;
+    //public Canvas NewGame;
+    //public Canvas Win;
 
     public enum CurrentScreen
     {
@@ -37,85 +37,85 @@ public class UIManager : MonoBehaviour
 
     public void MainMenuState()
     {
-        MainMenu.enabled = true;
+        //MainMenu.enabled = true;
         GamePlay.enabled = false;
-        Loose.enabled = false;
-        Save.enabled = false;
-        Pause.enabled = false;
-        NewGame.enabled = false;
-        Win.enabled = false;
+        //Loose.enabled = false;
+        //Save.enabled = false;
+        //Pause.enabled = false;
+        //NewGame.enabled = false;
+        //Win.enabled = false;
 
         currentState = CurrentScreen._MainMenu;
     }
 
     public void GamePlayState()
     {
-        MainMenu.enabled = false;
+       // MainMenu.enabled = false;
         GamePlay.enabled = true;
-        Loose.enabled = false;
-        Save.enabled = false;
-        Pause.enabled = false;
-        NewGame.enabled = false;
-        Win.enabled = false;
+       // Loose.enabled = false;
+       // Save.enabled = false;
+       // Pause.enabled = false;
+        //NewGame.enabled = false;
+        //Win.enabled = false;
 
         currentState = CurrentScreen._GamePlay;
     }
 
     public void LooseState()
     {
-        MainMenu.enabled = false;
+        //MainMenu.enabled = false;
         GamePlay.enabled = false;
-        Loose.enabled = true;
-        Save.enabled = false;
-        Pause.enabled = false;
-        NewGame.enabled = false;
-        Win.enabled = false;
+        //Loose.enabled = true;
+        //Save.enabled = false;
+       // Pause.enabled = false;
+       // NewGame.enabled = false;
+       // Win.enabled = false;
 
         currentState = CurrentScreen._Loose;
     }
 
     public void SaveState()
     {
-        Save.enabled = true;
+       // Save.enabled = true;
 
         currentState = CurrentScreen._SaveGame;
     }
 
     public void PauseState()
     {
-        MainMenu.enabled = false;
+       // MainMenu.enabled = false;
         GamePlay.enabled = true;
-        Loose.enabled = false;
-        Save.enabled = false;
-        Pause.enabled = true;
-        NewGame.enabled = false;
-        Win.enabled = false;
+      //  Loose.enabled = false;
+      //  Save.enabled = false;
+      //  Pause.enabled = true;
+      //  NewGame.enabled = false;
+      //  Win.enabled = false;
 
         currentState = CurrentScreen._Pause;
     }
 
     public void NewGameState()
     {
-        MainMenu.enabled = false;
+       // MainMenu.enabled = false;
         GamePlay.enabled = false;
-        Loose.enabled = false;
-        Save.enabled = false;
-        Pause.enabled = false;
-        NewGame.enabled = true;
-        Win.enabled = false;
+       // Loose.enabled = false;
+       // Save.enabled = false;
+       // Pause.enabled = false;
+       // NewGame.enabled = true;
+       // Win.enabled = false;
 
         currentState = CurrentScreen._NewGame;
     }
 
     public void WinState()
     {
-        MainMenu.enabled = false;
+       // MainMenu.enabled = false;
         GamePlay.enabled = false;
-        Loose.enabled = false;
-        Save.enabled = false;
-        Pause.enabled = false;
-        NewGame.enabled = false;
-        Win.enabled = true;
+       // Loose.enabled = false;
+       // Save.enabled = false;
+       // Pause.enabled = false;
+       // NewGame.enabled = false;
+       // Win.enabled = true;
 
         currentState = CurrentScreen._Win;
     }
