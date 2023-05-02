@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
     [Header("Refrences")]
     public Rigidbody rb;
     public GameObject cam;
+    public GameObject camHolder;
     public GrapplingHookControl GHC;
     public Transform orientation;
     public WeaponController WC;

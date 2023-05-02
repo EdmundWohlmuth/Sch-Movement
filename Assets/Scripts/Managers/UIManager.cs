@@ -9,9 +9,9 @@ public class UIManager : MonoBehaviour
     public static UIManager uIManager;
 
     [Header("User Interface Screens")]
-    //public Canvas MainMenu;
+    public Canvas MainMenu;
     public Canvas GamePlay;
-    //public Canvas Loose;
+    public Canvas Loose;
     //public Canvas Save;
     //public Canvas Pause;
     //public Canvas NewGame;
@@ -31,15 +31,26 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        //MainMenuState();
-        GamePlayState();
+        MainMenuState();
+        //GamePlayState();
+
+
+        if (uIManager == null)
+        {
+            uIManager = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (uIManager != this && uIManager != null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void MainMenuState()
     {
-        //MainMenu.enabled = true;
+        MainMenu.enabled = true;
         GamePlay.enabled = false;
-        //Loose.enabled = false;
+        Loose.enabled = false;
         //Save.enabled = false;
         //Pause.enabled = false;
         //NewGame.enabled = false;
@@ -50,9 +61,9 @@ public class UIManager : MonoBehaviour
 
     public void GamePlayState()
     {
-       // MainMenu.enabled = false;
+        MainMenu.enabled = false;
         GamePlay.enabled = true;
-       // Loose.enabled = false;
+        Loose.enabled = false;
        // Save.enabled = false;
        // Pause.enabled = false;
         //NewGame.enabled = false;
@@ -63,9 +74,9 @@ public class UIManager : MonoBehaviour
 
     public void LooseState()
     {
-        //MainMenu.enabled = false;
+        MainMenu.enabled = false;
         GamePlay.enabled = false;
-        //Loose.enabled = true;
+        Loose.enabled = true;
         //Save.enabled = false;
        // Pause.enabled = false;
        // NewGame.enabled = false;
@@ -83,9 +94,9 @@ public class UIManager : MonoBehaviour
 
     public void PauseState()
     {
-       // MainMenu.enabled = false;
+        MainMenu.enabled = false;
         GamePlay.enabled = true;
-      //  Loose.enabled = false;
+        Loose.enabled = false;
       //  Save.enabled = false;
       //  Pause.enabled = true;
       //  NewGame.enabled = false;
@@ -96,9 +107,9 @@ public class UIManager : MonoBehaviour
 
     public void NewGameState()
     {
-       // MainMenu.enabled = false;
+        MainMenu.enabled = false;
         GamePlay.enabled = false;
-       // Loose.enabled = false;
+        Loose.enabled = false;
        // Save.enabled = false;
        // Pause.enabled = false;
        // NewGame.enabled = true;
@@ -109,9 +120,9 @@ public class UIManager : MonoBehaviour
 
     public void WinState()
     {
-       // MainMenu.enabled = false;
+        MainMenu.enabled = false;
         GamePlay.enabled = false;
-       // Loose.enabled = false;
+        Loose.enabled = false;
        // Save.enabled = false;
        // Pause.enabled = false;
        // NewGame.enabled = false;

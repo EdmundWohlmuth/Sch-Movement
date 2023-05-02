@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public WeaponController playerWeapons;
 
     public TextMeshProUGUI ammoText;
+    public TextMeshProUGUI enemyCountText;
 
     private void Awake()
     {
@@ -45,13 +46,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ScreenState();
-        ammoText.text = "Ammo: " + playerWeapons.ammo;
-        if (currentEnemies.Count == 0)
-        {
-            Debug.Log("All Dead");
-            // spawn more
-        }
+        ScreenState();
+
     }
 
     void ScreenState()
@@ -59,22 +55,49 @@ public class GameManager : MonoBehaviour
         switch (UIManager.uIManager.currentState)
         {
             case UIManager.CurrentScreen._MainMenu:
+                UIManager.uIManager.MainMenuState();
+                Time.timeScale = 1;
+                Cursor.lockState = CursorLockMode.Confined;
 
                 break;
 
             case UIManager.CurrentScreen._GamePlay:
-                
+              
+                UIManager.uIManager.GamePlayState();
+                Time.timeScale = 1;
+                Cursor.lockState = CursorLockMode.Locked;
+
+                if (playerWeapons == null) playerWeapons = GameObject.Find("Player").GetComponent<WeaponController>();
+                ammoText.text = "Ammo: " + playerWeapons.ammo;
+                enemyCountText.text = "Enemies: " + currentEnemies.Count;
+
+                if (currentEnemies.Count == 0)
+                {
+                    //Debug.Log("All Dead");
+                    // spawn more
+                }
                 break;
 
             case UIManager.CurrentScreen._Pause:
+
+                Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.Confined;
 
                 break;
 
             case UIManager.CurrentScreen._Win:
 
+                Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.Confined;
+
                 break;
 
             case UIManager.CurrentScreen._Loose:
+
+                UIManager.uIManager.LooseState();
+                Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.Confined;
+                UIManager.uIManager.LooseState();
 
                 break;
 
@@ -92,7 +115,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver()
-    {
-
+    {      
+        UIManager.uIManager.currentState = UIManager.CurrentScreen._Loose;
     }
 }

@@ -62,7 +62,7 @@ public class SimpleCameraController : MonoBehaviour
     {
         m_TargetCameraState.SetFromTransform(transform);
         m_InterpolatingCameraState.SetFromTransform(transform);
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     void Update()
