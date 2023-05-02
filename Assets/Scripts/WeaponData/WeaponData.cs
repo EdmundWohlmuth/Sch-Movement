@@ -8,6 +8,7 @@ public class WeaponData : ScriptableObject
     public WeaponController.Weapons weaponType;
     public Material gunMat;
     public Mesh currentMesh;
+    public AudioClip sound;
     //public GameObject projectile;
     public int maxAmmo;                             // how many bullets gun has total
     public int damage;                              // damage gun deals

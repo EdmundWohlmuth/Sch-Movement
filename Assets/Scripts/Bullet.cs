@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
             // Deal damage
             collision.gameObject.GetComponent<HealthController>().TakeDamage(damage);
 
-            Debug.Log("hit Player");
+            //Debug.Log("hit Player");
             Destroy(gameObject);
         }
         

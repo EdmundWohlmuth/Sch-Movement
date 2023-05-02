@@ -24,7 +24,15 @@ public class AudioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (audioManager == null)
+        {
+            audioManager = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (audioManager != this && audioManager != null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -33,13 +41,14 @@ public class AudioManager : MonoBehaviour
         
     }
 
-    public void PlaySound(AudioSource source, AudioClip clip)
+    public void PlaySound(AudioSource source, AudioClip clip, bool playOnce)
     {
-        if (source.isPlaying) return;
+        if (source.isPlaying && playOnce) return;
 
         source.clip = clip;
         // volume stuff here
         source.Play();
+        Debug.Log("Sound played");
     }
 
     public void StopSound(AudioSource source)

@@ -29,6 +29,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] Transform bulletOrign;
     [SerializeField] Transform gunPos;
     [SerializeField] PlayerController PC;
+    [SerializeField] AudioSource source;
+    [SerializeField] AudioManager AM;
 
     [Header("Weapon handling")]
     [SerializeField] bool isAI;
@@ -41,6 +43,7 @@ public class WeaponController : MonoBehaviour
     void Start()
     {
         if (!isAI) PC = GetComponent<PlayerController>();
+        source = GetComponent<AudioSource>();
         SwitchWeapon();       
     }
 
@@ -112,19 +115,19 @@ public class WeaponController : MonoBehaviour
             currentBullet.GetComponent<Rigidbody>().AddForce(bulletDirectrion.normalized * weaponData.projectileSpeed, ForceMode.Impulse);
         }
 
+        AudioManager.audioManager.PlaySound(source, weaponData.sound, false);
         if (!isAI)
         {
             ammo--;
-
+          
             if (ammo <= 0)
             {
                 // toss weapon
 
                 SetMelee();
             }
-            PC.Recoil();
-            mainCam.DOShakePosition(0.25f, weaponData.camShake, 10, 30);
-
+            PC.Recoil();           
+            mainCam.DOShakePosition(0.25f, weaponData.camShake, 10, 30);           
         }
         else
         {
@@ -134,7 +137,7 @@ public class WeaponController : MonoBehaviour
                 reloadTimer = 0;
                 AINeedsToReload = true;
             } 
-        }
+        }       
         fireRateTimer = 0;
         canShoot = false;
     }

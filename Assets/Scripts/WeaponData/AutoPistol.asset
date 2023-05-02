@@ -16,6 +16,7 @@ MonoBehaviour:
   gunMat: {fileID: -6202392741857895490, guid: a6804c91c2484d941bbaafb05e9c9761, type: 3}
   currentMesh: {fileID: -7819068998735988678, guid: 7ea5bf16d6c4ab54785e51ca7bce4138,
     type: 3}
+  sound: {fileID: 8300000, guid: bab572b435c3e284cab159374ec006f4, type: 3}
   maxAmmo: 15
   damage: 2
   knockback: 4
