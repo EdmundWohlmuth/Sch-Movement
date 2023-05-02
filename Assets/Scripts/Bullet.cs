@@ -11,11 +11,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Physics.IgnoreLayerCollision(8, 8); 
-
-        if (isAI) Physics.IgnoreLayerCollision(8, 7);
-        else Physics.IgnoreLayerCollision(8, 6);
- 
+        Physics.IgnoreLayerCollision(8, 8);     
     }
 
     // Update is called once per frame
@@ -37,6 +33,12 @@ public class Bullet : MonoBehaviour
         }
         else if (collision.gameObject.layer == 7)
         {
+            if (isAI)
+            {
+                Physics.IgnoreCollision(gameObject.GetComponent<CapsuleCollider>(), collision.collider);
+                return;
+            }
+                
             // Deal damage
             collision.gameObject.GetComponent<HealthController>().TakeDamage(damage);
 
@@ -45,6 +47,11 @@ public class Bullet : MonoBehaviour
         }
         else if (collision.gameObject.layer == 6)
         {
+            if (!isAI)
+            {
+                Physics.IgnoreCollision(gameObject.GetComponent<CapsuleCollider>(), collision.collider);
+                return;
+            } 
             // Deal damage
             collision.gameObject.GetComponent<HealthController>().TakeDamage(damage);
 

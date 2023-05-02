@@ -92,8 +92,7 @@ public class AIController : MonoBehaviour
                 }
                 else
                 {
-                    Vector3 playerPos = new Vector3((player.transform.position.x), 0f, (player.transform.position.z));
-                    gameObject.transform.LookAt(playerPos);
+                    
                     if (attackCheck && lineOfSight)
                     {
                         currentState = state.attack;

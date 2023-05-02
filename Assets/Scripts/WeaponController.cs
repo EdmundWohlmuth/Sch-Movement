@@ -111,6 +111,8 @@ public class WeaponController : MonoBehaviour
             bulletDirectrion = directionWithSpread;
 
             GameObject currentBullet = Instantiate(bullet, bulletOrign.position, Quaternion.identity);
+            if (isAI) currentBullet.GetComponent<Bullet>().isAI = true;
+            else currentBullet.GetComponent<Bullet>().isAI = false;
             currentBullet.transform.right = bulletDirectrion.normalized;
             currentBullet.GetComponent<Bullet>().damage = weaponData.damage;
             currentBullet.GetComponent<Rigidbody>().AddForce(bulletDirectrion.normalized * weaponData.projectileSpeed, ForceMode.Impulse);
