@@ -6,9 +6,7 @@ using UnityEngine.AI;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public float spawnRadius = 30f;
-    public float checkRadius = 2f;
-    int enemiesToSpawn = 20;
+    int enemiesToSpawn = 15;
 
     NavMeshTriangulation triangulation;
 
@@ -42,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         {
             int i = Random.Range(0, 6);
             GameObject enemy = Instantiate(enemyPrefab, hit.position, transform.rotation);
-            enemy.GetComponent<WeaponController>().weaponData = GameManager.gameManager.weaponType[i];
+            enemy.GetComponent<WeaponController>().weapon = (WeaponController.Weapons)i;
             enemy.GetComponent<WeaponController>().SwitchWeapon();
             
         }
