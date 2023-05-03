@@ -42,8 +42,9 @@ public class EnemySpawner : MonoBehaviour
         {
             int i = Random.Range(0, 6);
             GameObject enemy = Instantiate(enemyPrefab, hit.position, transform.rotation);
-            enemy.GetComponent<WeaponController>().weaponData = GameManager.gameManager.weaponType[i];             
-            enemy.GetComponent<WeaponController>().ammo = GameManager.gameManager.weaponType[i].maxAmmo;
+            enemy.GetComponent<WeaponController>().weaponData = GameManager.gameManager.weaponType[i];
+            enemy.GetComponent<WeaponController>().SwitchWeapon();
+            
         }
         else Debug.LogError("action failed");
     }
