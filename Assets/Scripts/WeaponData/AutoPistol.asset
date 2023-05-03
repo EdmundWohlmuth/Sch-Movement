@@ -18,7 +18,7 @@ MonoBehaviour:
     type: 3}
   sound: {fileID: 8300000, guid: bab572b435c3e284cab159374ec006f4, type: 3}
   maxAmmo: 15
-  damage: 3
+  damage: 4
   knockback: 2
   projectilesPerShot: 1
   projectileSpeed: 50

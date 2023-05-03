@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static Camera mainCam;
 
     public static List<GameObject> currentEnemies = new List<GameObject>();
+    public static List<GameObject> droppedWeapons = new List<GameObject>();
     // DO THIS WITH BULLETS TOO - WITH 50 GUYS SHOOTING BUCKSHOT CAN USE THIS TO REDUCE LAG
 
     public List<WeaponData> weaponType = new List<WeaponData>();
@@ -37,10 +38,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*for (int i = 0; i < currentEnemies.Count; i++)
-        {
-            Debug.Log(currentEnemies[i]);
-        }*/
         
     }
 
@@ -48,7 +45,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         ScreenState();
-
     }
 
     void ScreenState()
@@ -56,7 +52,7 @@ public class GameManager : MonoBehaviour
         switch (UIManager.uIManager.currentState)
         {
             case UIManager.CurrentScreen._MainMenu:
-                UIManager.uIManager.MainMenuState();
+                UIManager.uIManager.MainMenuState(); // THESE ARE CALLED EVERY FRAME, BAD.
                 Time.timeScale = 1;
                 Cursor.lockState = CursorLockMode.Confined;
 
@@ -65,7 +61,7 @@ public class GameManager : MonoBehaviour
             case UIManager.CurrentScreen._GamePlay:
               
                 UIManager.uIManager.GamePlayState();
-                Time.timeScale = 1;
+                Time.timeScale = 1; // SHOULD ONLY BE CALLED WHEN STATE IS CHANGED
                 Cursor.lockState = CursorLockMode.Locked;
 
                 if (playerWeapons == null) playerWeapons = GameObject.Find("Player").GetComponent<WeaponController>();

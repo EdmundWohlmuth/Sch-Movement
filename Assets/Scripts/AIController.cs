@@ -18,15 +18,19 @@ public class AIController : MonoBehaviour
     bool attackCheck;
     bool lineOfSight;
     bool obstructedSight;
+
+    bool lookingForGun;
+
     [SerializeField] float attackRange;
     [SerializeField] float sightRange;
-    
+
     [SerializeField] LayerMask playerMask;
     [SerializeField] LayerMask obstrutionMask;
     Vector3 startPos;
 
     // Refrences
     GameObject player;
+    GameObject destination;
     [SerializeField] NavMeshAgent agent;
     WeaponController WC;
     [SerializeField] GameObject gunPos;
@@ -51,7 +55,11 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (WC.weapon == WeaponController.Weapons.Melee) currentState = state.missingGun;
+        if (WC.weapon == WeaponController.Weapons.Melee)
+        {
+            lookingForGun = true;
+            currentState = state.missingGun;
+        }
 
         sightCheck = Physics.CheckSphere(pos.transform.position, sightRange, playerMask);
         lineOfSight = Physics.Raycast(pos.transform.position, player.transform.position - transform.position, sightRange, playerMask);
@@ -63,7 +71,7 @@ public class AIController : MonoBehaviour
             case state.idle:
 
                 if (lineOfSight && sightCheck && !obstructedSight)
-                {                   
+                {
                     currentState = state.chase;
                 }
                 Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.blue);
@@ -72,7 +80,7 @@ public class AIController : MonoBehaviour
 
             case state.chase:
 
-                gunPos.transform.rotation = new Quaternion(0,0,0,0);
+                gunPos.transform.rotation = new Quaternion(0, 0, 0, 0);
 
                 if (!sightCheck && !lineOfSight)
                 {
@@ -92,7 +100,7 @@ public class AIController : MonoBehaviour
                 }
                 else
                 {
-                    
+
                     if (attackCheck && lineOfSight)
                     {
                         currentState = state.attack;
@@ -110,7 +118,7 @@ public class AIController : MonoBehaviour
 
                 WC.Fire();
 
-                agent.SetDestination(player.transform.position);               
+                agent.SetDestination(player.transform.position);
 
                 if (!attackCheck && !lineOfSight || obstructedSight)
                 {
@@ -122,6 +130,8 @@ public class AIController : MonoBehaviour
 
             case state.missingGun:
 
+                if (lookingForGun) FindGun();
+
 
                 break;
 
@@ -131,73 +141,93 @@ public class AIController : MonoBehaviour
         }
     }
 
-    void OnStartedState(state state)
+    void FindGun()
     {
-        switch (state)
+        NavMeshPath path = new NavMeshPath();
+
+        if (GameManager.droppedWeapons.Count > 0)
         {
-            case state.idle:
-                break;
+            for (int i = 0; i < GameManager.droppedWeapons.Count; i++)
+            {
+                if (agent.CalculatePath(GameManager.droppedWeapons[i].transform.position, path))
+                {
+                    lookingForGun = false;
+                    destination = GameManager.droppedWeapons[i];
+                    agent.SetDestination(GameManager.droppedWeapons[i].transform.position);
+                }
 
-            case state.chase:
-                break;
-
-            case state.attack:
-                break;
-
-            case state.missingGun:
-                break;
-
-            default:
-                break;
+                if (lookingForGun == false) return;
+            }
         }
+
+        void OnStartedState(state state)
+        {
+            switch (state)
+            {
+                case state.idle:
+                    break;
+
+                case state.chase:
+                    break;
+
+                case state.attack:
+                    break;
+
+                case state.missingGun:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        void OnEndedState(state state)
+        {
+            switch (state)
+            {
+                case state.idle:
+                    break;
+
+                case state.chase:
+                    break;
+
+                case state.attack:
+                    break;
+
+                case state.missingGun:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        void OnDrawGizmos()
+        {
+            //Gizmos.color = Color.red;
+            //Gizmos.DrawWireSphere(transform.position, attackRange);
+
+            //Gizmos.color = Color.yellow;
+            //Gizmos.DrawWireSphere(transform.position, sightRange);
+
+            /*        if (lineOfSight && !obstructedSight)
+                    {
+                        Gizmos.color = Color.red;
+                        Gizmos.DrawLine(pos.transform.position, player.transform.position);
+                    }
+                    else if (obstructedSight)
+                    {
+                        Gizmos.color = Color.blue;
+                        Gizmos.DrawRay(pos.transform.position, player.transform.position);
+                    }
+                    else if (!sightCheck)
+                    {
+                        Gizmos.color = Color.gray;
+                        Gizmos.DrawLine(pos.transform.position, player.transform.position);
+                    }*/
+
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawSphere(agent.destination, 0.35f);
+        }
+
     }
-    void OnEndedState(state state)
-    {
-        switch (state)
-        {
-            case state.idle:
-                break;
-
-            case state.chase:
-                break;
-
-            case state.attack:
-                break;
-
-            case state.missingGun:
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, attackRange);
-
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position, sightRange);
-
-/*        if (lineOfSight && !obstructedSight)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos.transform.position, player.transform.position);
-        }
-        else if (obstructedSight)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawRay(pos.transform.position, player.transform.position);
-        }
-        else if (!sightCheck)
-        {
-            Gizmos.color = Color.gray;
-            Gizmos.DrawLine(pos.transform.position, player.transform.position);
-        }*/
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawSphere(agent.destination, 0.35f);
-    }
-
 }
