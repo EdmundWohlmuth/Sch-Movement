@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public List<WeaponData> weaponType = new List<WeaponData>();
     public WeaponController playerWeapons;
+    public EnemySpawner enemySpawner;
 
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI enemyCountText;
@@ -68,6 +69,8 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
 
                 if (playerWeapons == null) playerWeapons = GameObject.Find("Player").GetComponent<WeaponController>();
+                if (enemySpawner == null) enemySpawner = GameObject.Find("Map1").GetComponent<EnemySpawner>();
+
                 ammoText.text = "Ammo: " + playerWeapons.ammo;
                 enemyCountText.text = "Enemies: " + currentEnemies.Count;
 
@@ -75,6 +78,7 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("All Dead");
                     // spawn more
+                    enemySpawner.BeginSpawn();
                 }
                 break;
 
@@ -117,5 +121,12 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {      
         UIManager.uIManager.currentState = UIManager.CurrentScreen._Loose;
+
+        if (currentEnemies.Count > 0) Reset();
+    }
+
+    void Reset()
+    {
+        currentEnemies.Clear();
     }
 }
