@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class SimpleCameraController : MonoBehaviour
 {
+    public GameObject camHolder;
+
     class CameraState
     {
         public float yaw;
         public float pitch;
-        public float roll;
+        public float roll;     
 
         public float sensX;
         public float sensY;
@@ -60,8 +63,8 @@ public class SimpleCameraController : MonoBehaviour
 
     void OnEnable()
     {
-        m_TargetCameraState.SetFromTransform(transform);
-        m_InterpolatingCameraState.SetFromTransform(transform);
+        m_TargetCameraState.SetFromTransform(camHolder.transform);
+        m_InterpolatingCameraState.SetFromTransform(camHolder.transform);
         
     }
 
@@ -96,6 +99,16 @@ public class SimpleCameraController : MonoBehaviour
         var rotationLerpPct = 1f - Mathf.Exp((Mathf.Log(1f - 0.99f) / rotationLerpTime) * Time.deltaTime);
         m_InterpolatingCameraState.LerpTowards(m_TargetCameraState, positionLerpPct, rotationLerpPct);
 
-        m_InterpolatingCameraState.UpdateTransform(transform);
+        m_InterpolatingCameraState.UpdateTransform(camHolder.transform);
+    }
+
+
+    public void FOVEffect(float value, float time)
+    {
+        GetComponent<Camera>().DOFieldOfView(value, time);
+    }
+    public void TiltEffect(float tilt, float time)
+    {
+        transform.DOLocalRotate(new Vector3(0, 0, tilt), time);
     }
 }

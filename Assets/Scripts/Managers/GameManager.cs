@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         ScreenState();
+        if (currentEnemies.Count <= 3)
+        {
+            // highlight enemies so they're easier to find
+        }
     }
 
     void ScreenState()

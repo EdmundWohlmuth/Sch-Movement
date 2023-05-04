@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public GrapplingHookControl GHC;
     public Transform orientation;
     public WeaponController WC;
+    SimpleCameraController cameraScript;
 
 
     // Start is called before the first frame update
@@ -65,7 +66,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         GHC = GetComponent<GrapplingHookControl>();
-        rb.freezeRotation = true;       
+        rb.freezeRotation = true;
+        cameraScript = cam.GetComponent<SimpleCameraController>();
     }
 
     // Update is called once per frame
@@ -81,7 +83,10 @@ public class PlayerController : MonoBehaviour
     {
         if (wallRunning) WallRunningMovement();
         else MovePlayer();
-        //Debug.Log(rb.velocity.normalized);
+
+        if (rb.velocity.magnitude > 15f) cameraScript.FOVEffect(75, .25f);
+        else if (rb.velocity.magnitude > 20f) Debug.Log("fast"); // speed lines
+        else cameraScript.FOVEffect(60, .25f);
     }
 
     void PlayerInput()
@@ -134,6 +139,8 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Wall Running!");
         wallRunning = true;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // might want to disable this
+        if (leftWall) cameraScript.TiltEffect(-5f, 0.25f);
+        else if (rightWall) cameraScript.TiltEffect(5f, 0.25f);
     }
     void WallRunningMovement()
     {
@@ -153,6 +160,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Stop Wall Running");
         wallRunning = false;
         rb.useGravity = true;
+        cameraScript.TiltEffect(0, 0.25f);
     }
 
     void ExitWallRun()
@@ -166,7 +174,7 @@ public class PlayerController : MonoBehaviour
         else if (exitWallTime <= 0)
         {
             exitingWall = false;
-        }
+        }       
     }
 
     public void Recoil()

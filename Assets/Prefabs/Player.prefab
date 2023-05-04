@@ -424,6 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfd56575a75025f438d7bf32742afe7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camHolder: {fileID: 7336734089079449344}
   boost: 3.5
   positionLerpTime: 0.2
   mouseSensitivityCurve:
@@ -488,7 +489,7 @@ Transform:
   m_Children:
   - {fileID: 5520183199142851151}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8757514820939757781
 MonoBehaviour:
