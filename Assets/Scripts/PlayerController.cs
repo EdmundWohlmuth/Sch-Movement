@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public GrapplingHookControl GHC;
     public Transform orientation;
     public WeaponController WC;
+    public GameObject speedlinesHolder;
     SimpleCameraController cameraScript;
 
 
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour
         GHC = GetComponent<GrapplingHookControl>();
         rb.freezeRotation = true;
         cameraScript = cam.GetComponent<SimpleCameraController>();
+        speedlinesHolder.SetActive(false);
     }
 
     // Update is called once per frame
@@ -84,9 +86,18 @@ public class PlayerController : MonoBehaviour
         if (wallRunning) WallRunningMovement();
         else MovePlayer();
 
-        if (rb.velocity.magnitude > 15f) cameraScript.FOVEffect(75, .25f);
-        else if (rb.velocity.magnitude > 20f) Debug.Log("fast"); // speed lines
-        else cameraScript.FOVEffect(60, .25f);
+        //effects
+        if (rb.velocity.magnitude > 20f) speedlinesHolder.SetActive(true);
+        else if (rb.velocity.magnitude > 15f)
+        {
+            speedlinesHolder.SetActive(false);
+            cameraScript.FOVEffect(75, .25f);
+        }
+        else
+        {
+            speedlinesHolder.SetActive(false);
+            cameraScript.FOVEffect(60, .25f);
+        }           
     }
 
     void PlayerInput()
