@@ -5,14 +5,15 @@ using UnityEngine;
 public class DroppedWeapon : MonoBehaviour
 {
     Rigidbody rb;
-    int weaponNum;
+    public int weaponNum;
+    public bool taken;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
         GameManager.droppedWeapons.Add(gameObject);
-        rb.AddForce(Vector3.forward * 2f, ForceMode.Impulse);      
+        rb.AddForce(Vector3.right * 2f, ForceMode.Impulse);      
     }
 
     // Update is called once per frame
@@ -23,6 +24,10 @@ public class DroppedWeapon : MonoBehaviour
 
     public void PickUp(WeaponController wc)
     {
+        Debug.Log("PICKUP");
         wc.GetComponent<WeaponController>().weapon = (WeaponController.Weapons)weaponNum;
+        wc.SwitchWeapon();
+        GameManager.droppedWeapons.Remove(gameObject);
+        Destroy(gameObject);
     }
 }

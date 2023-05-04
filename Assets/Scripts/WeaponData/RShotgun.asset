@@ -26,3 +26,5 @@ MonoBehaviour:
   bulletSpread: 0.7
   camShake: 1
   isAutoFire: 0
+  modelToDrop: {fileID: 2913314955659476993, guid: 4d5639607267fd34db11422579b12d54,
+    type: 3}

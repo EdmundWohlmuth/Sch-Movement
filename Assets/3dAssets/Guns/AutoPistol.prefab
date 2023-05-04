@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 3019110978947858767}
   - component: {fileID: 5793015912869552645}
   - component: {fileID: 2832148459301207304}
-  - component: {fileID: 8642154113903983333}
   - component: {fileID: 121253343061352446}
+  - component: {fileID: 999863215852534076}
+  - component: {fileID: 1882019795907009680}
   m_Layer: 0
   m_Name: AutoPistol
   m_TagString: Untagged
@@ -6235,28 +6236,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7689338372899699781}
   m_Mesh: {fileID: 0}
---- !u!64 &8642154113903983333
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7689338372899699781}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!54 &121253343061352446
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6284,3 +6263,38 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &999863215852534076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7689338372899699781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbcf18da2aec01146a121949d8f32788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponNum: 2
+  taken: 0
+--- !u!65 &1882019795907009680
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7689338372899699781}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.0598544, y: 0.18059424, z: 0.4191636}
+  m_Center: {x: 0.03064431, y: 0.0011162311, z: -0.2011046}

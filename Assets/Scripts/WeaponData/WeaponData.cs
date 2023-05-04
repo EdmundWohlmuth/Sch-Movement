@@ -19,4 +19,6 @@ public class WeaponData : ScriptableObject
     public float bulletSpread;                      // how much the bullet deviates
     public float camShake;
     public bool isAutoFire;                         // can hold down to shoot
+
+    public GameObject modelToDrop;
 }

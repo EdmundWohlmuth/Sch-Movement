@@ -87,7 +87,11 @@ public class PlayerController : MonoBehaviour
         else MovePlayer();
 
         //effects
-        if (rb.velocity.magnitude > 20f) speedlinesHolder.SetActive(true);
+        if (rb.velocity.magnitude > 20f) 
+        {
+            speedlinesHolder.SetActive(true);
+            cameraScript.FOVEffect(75, .25f);
+        } 
         else if (rb.velocity.magnitude > 15f)
         {
             speedlinesHolder.SetActive(false);

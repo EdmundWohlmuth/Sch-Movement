@@ -58,8 +58,9 @@ public class WeaponController : MonoBehaviour
 
     public void SwitchWeapon()
     {
-        // pulls the weapon type from
+        if (weaponData != null && !isAI) CreateDropedWeapon();
 
+        // pulls the weapon type from       
         for (int i = 0; i < GameManager.gameManager.weaponType.Count; i++)
         {
             if (GameManager.gameManager.weaponType[i].weaponType == weapon)     // weaponData is the script
@@ -126,7 +127,7 @@ public class WeaponController : MonoBehaviour
             if (ammo <= 0)
             {
                 // toss weapon
-
+                CreateDropedWeapon();
                 SetMelee();
             }
             PC.Recoil();           
@@ -179,5 +180,10 @@ public class WeaponController : MonoBehaviour
     public void Melee()
     {
 
+    }
+
+    void CreateDropedWeapon()
+    {
+        Instantiate(weaponData.modelToDrop, new Vector3(gunPos.transform.position.x, gunPos.transform.position.y, gunPos.transform.position.z - 0.5f), Quaternion.identity);
     }
 }

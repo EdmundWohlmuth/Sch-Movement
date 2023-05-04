@@ -12,14 +12,14 @@ public class AIController : MonoBehaviour
         attack,
         missingGun
     }
-    state currentState;
+    [SerializeField] state currentState;
 
     bool sightCheck;
     bool attackCheck;
     bool lineOfSight;
     bool obstructedSight;
 
-    bool lookingForGun;
+    [SerializeField] bool lookingForGun;
 
     [SerializeField] float attackRange;
     [SerializeField] float sightRange;
@@ -30,7 +30,7 @@ public class AIController : MonoBehaviour
 
     // Refrences
     GameObject player;
-    GameObject destination;
+    [SerializeField] GameObject destination;
     [SerializeField] NavMeshAgent agent;
     WeaponController WC;
     [SerializeField] GameObject gunPos;
@@ -55,7 +55,7 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (WC.weapon == WeaponController.Weapons.Melee)
+        if (WC.weapon == WeaponController.Weapons.Melee && lookingForGun == false && destination == null)
         {
             lookingForGun = true;
             currentState = state.missingGun;
@@ -129,9 +129,11 @@ public class AIController : MonoBehaviour
                 break;
 
             case state.missingGun:
-
+                
                 if (lookingForGun) FindGun();
+                else if (destination != null) PickpGun();
 
+                if (WC.weapon != WeaponController.Weapons.Melee) currentState = state.chase;
 
                 break;
 
@@ -139,10 +141,29 @@ public class AIController : MonoBehaviour
 
                 break;
         }
+
+        if (currentState != state.missingGun)
+        {
+            agent.stoppingDistance = 10f;
+        }
+        else agent.stoppingDistance = 0.1f;
+    }
+
+    void PickpGun()
+    {
+        agent.SetDestination(destination.transform.position);
+        Debug.Log(Vector3.Distance(transform.position, destination.transform.position));
+
+        if (Vector3.Distance(transform.position, destination.transform.position) < 1f)
+        {
+            Debug.Log(gameObject.name + " picked up gun");
+            destination.GetComponent<DroppedWeapon>().PickUp(WC);
+            destination = null;
+        }
     }
 
     void FindGun()
-    {
+    {        
         NavMeshPath path = new NavMeshPath();
 
         if (GameManager.droppedWeapons.Count > 0)
@@ -151,54 +172,28 @@ public class AIController : MonoBehaviour
             {
                 if (agent.CalculatePath(GameManager.droppedWeapons[i].transform.position, path))
                 {
-                    lookingForGun = false;
-                    destination = GameManager.droppedWeapons[i];
-                    agent.SetDestination(GameManager.droppedWeapons[i].transform.position);
+                    if (destination != null && destination != GameManager.droppedWeapons[i].gameObject)
+                    {
+                        if (Vector3.Distance(transform.position, destination.transform.position) > 
+                            Vector3.Distance(transform.position, GameManager.droppedWeapons[i].transform.position))
+                        {
+                            if (destination.GetComponent<DroppedWeapon>().taken != true)
+                            {
+                                destination = GameManager.droppedWeapons[i].gameObject;
+                                destination.GetComponent<DroppedWeapon>().taken = true;
+                            }
+                                                     
+                        }
+                    } 
+                    else if (destination == null) destination = GameManager.droppedWeapons[i].gameObject;
                 }
-
-                if (lookingForGun == false) return;
             }
-        }
-
-        void OnStartedState(state state)
-        {
-            switch (state)
+            if (destination != null)
             {
-                case state.idle:
-                    break;
-
-                case state.chase:
-                    break;
-
-                case state.attack:
-                    break;
-
-                case state.missingGun:
-                    break;
-
-                default:
-                    break;
+                agent.SetDestination(destination.transform.position);
+                lookingForGun = false;
             }
-        }
-        void OnEndedState(state state)
-        {
-            switch (state)
-            {
-                case state.idle:
-                    break;
-
-                case state.chase:
-                    break;
-
-                case state.attack:
-                    break;
-
-                case state.missingGun:
-                    break;
-
-                default:
-                    break;
-            }
+            else lookingForGun = true;
         }
 
         void OnDrawGizmos()
