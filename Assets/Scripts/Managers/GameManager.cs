@@ -122,11 +122,12 @@ public class GameManager : MonoBehaviour
     {      
         UIManager.uIManager.currentState = UIManager.CurrentScreen._Loose;
 
-        if (currentEnemies.Count > 0) Reset();
+        if (currentEnemies.Count > 0 || droppedWeapons.Count > 0) Reset();
     }
 
     void Reset()
     {
         currentEnemies.Clear();
+        droppedWeapons.Clear();
     }
 }

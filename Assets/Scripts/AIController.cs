@@ -152,7 +152,7 @@ public class AIController : MonoBehaviour
     void PickpGun()
     {
         agent.SetDestination(destination.transform.position);
-        Debug.Log(Vector3.Distance(transform.position, destination.transform.position));
+       // Debug.Log(Vector3.Distance(transform.position, destination.transform.position));
 
         if (Vector3.Distance(transform.position, destination.transform.position) < 1f)
         {
