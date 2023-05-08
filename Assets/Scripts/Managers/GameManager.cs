@@ -49,6 +49,23 @@ public class GameManager : MonoBehaviour
         {
             // highlight enemies so they're easier to find
         }
+        //TEMP
+        if (Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            ArenaManager.arenaManager.SpawnArena(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            ArenaManager.arenaManager.SpawnArena(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            ArenaManager.arenaManager.SpawnArena(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            ArenaManager.arenaManager.SpawnArena(4);
+        }
     }
 
     void ScreenState()
@@ -69,7 +86,7 @@ public class GameManager : MonoBehaviour
                 Cursor.lockState = CursorLockMode.Locked;
 
                 if (playerWeapons == null) playerWeapons = GameObject.Find("Player").GetComponent<WeaponController>();
-                if (enemySpawner == null) enemySpawner = GameObject.Find("Map1").GetComponent<EnemySpawner>();
+                if (enemySpawner == null) enemySpawner = GameObject.Find("LevelPrefab").GetComponent<EnemySpawner>(); //TEMP
 
                 ammoText.text = "Ammo: " + playerWeapons.ammo;
                 enemyCountText.text = "Enemies: " + currentEnemies.Count;
@@ -78,7 +95,7 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("All Dead");
                     // spawn more
-                    enemySpawner.BeginSpawn();
+                    //enemySpawner.BeginSpawn();
                 }
                 break;
 

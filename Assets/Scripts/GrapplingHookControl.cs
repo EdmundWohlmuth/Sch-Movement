@@ -130,7 +130,7 @@ public class GrapplingHookControl : MonoBehaviour
         grappling = true;
 
         velocityToSet = CalculateJumpVelocity(transform.position, targetPosition, trajectoryHeight);
-        Invoke(nameof(SetVelocity), 0.1f);
+        SetVelocity();
 
         Invoke(nameof(ResetRestrictions), 3f);
     }

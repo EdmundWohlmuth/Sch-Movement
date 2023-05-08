@@ -74,6 +74,7 @@ public class AIController : MonoBehaviour
                 {
                     currentState = state.chase;
                 }
+                Debug.DrawRay(pos.transform.position, player.transform.position - transform.position, Color.gray, obstrutionMask);
                 Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.blue);
 
                 break;
