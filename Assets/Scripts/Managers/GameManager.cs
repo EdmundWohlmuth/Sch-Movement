@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager;
     public static Camera mainCam;
+    public ArenaManager arenaManager;
 
     public static List<GameObject> currentEnemies = new List<GameObject>();
     public static List<GameObject> droppedWeapons = new List<GameObject>();
@@ -19,6 +20,10 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI enemyCountText;
+
+    public List<Vector3> spawnedPositions = new List<Vector3>();
+    public Vector3 posToSpawn;
+    int arenasCompleted;
 
     private void Awake()
     {
@@ -49,22 +54,23 @@ public class GameManager : MonoBehaviour
         {
             // highlight enemies so they're easier to find
         }
+
         //TEMP
         if (Input.GetKeyDown(KeyCode.Keypad8))
         {
-            ArenaManager.arenaManager.SpawnArena(1);
+            arenaManager.SpawnArena(1);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad2))
         {
-            ArenaManager.arenaManager.SpawnArena(2);
+            arenaManager.SpawnArena(2);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            ArenaManager.arenaManager.SpawnArena(3);
+            arenaManager.SpawnArena(3);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad6))
         {
-            ArenaManager.arenaManager.SpawnArena(4);
+            arenaManager.SpawnArena(4);
         }
     }
 
@@ -95,7 +101,8 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("All Dead");
                     // spawn more
-                    //enemySpawner.BeginSpawn();
+                    enemySpawner.BeginSpawn();
+                    arenaManager.SetOpenable();
                 }
                 break;
 

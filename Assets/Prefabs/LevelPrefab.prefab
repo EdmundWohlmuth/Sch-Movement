@@ -220,6 +220,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3535612617049778900}
   - component: {fileID: 95683230916485873}
+  - component: {fileID: 2744910977604878388}
+  - component: {fileID: 5541804148780285540}
   m_Layer: 0
   m_Name: LevelPrefab
   m_TagString: Untagged
@@ -258,6 +260,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 5519055024539078863, guid: 3daa2584fbff55e48a582b62adc41b35,
     type: 3}
+--- !u!114 &2744910977604878388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5797966115183935270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 0}
+  m_BuildHeightMesh: 0
+--- !u!114 &5541804148780285540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5797966115183935270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db40d27f85554e4eb86368cd346af1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 8086643233332082860}
+  doors:
+  - {fileID: 9055674362171343538}
+  - {fileID: 8430577545799164486}
+  - {fileID: 4078724989234402490}
+  - {fileID: 4488238226417434059}
+  openableMat: {fileID: 2100000, guid: 80d8df86b7b516148b0a2a4af0643684, type: 2}
+  nonOpenableMat: {fileID: 2100000, guid: 315f700f957eab54a9b8e980c5d0c0e1, type: 2}
+  lastOpenDoor: 0
+  arenaToSpawn: {fileID: 5797966115183935270}
 --- !u!1 &8086643233332082860
 GameObject:
   m_ObjectHideFlags: 0
