@@ -24,7 +24,7 @@ public class DroppedWeapon : MonoBehaviour
 
     public void PickUp(WeaponController wc)
     {
-        Debug.Log("PICKUP");
+       // Debug.Log("PICKUP");
         wc.GetComponent<WeaponController>().weapon = (WeaponController.Weapons)weaponNum;
         wc.SwitchWeapon();
         GameManager.droppedWeapons.Remove(gameObject);

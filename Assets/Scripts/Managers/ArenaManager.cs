@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ArenaManager : MonoBehaviour
 {
+    // ALL OF THIS IS, FRANKLY, AWFUL. OPTIMISE LATER
     int width = 200;
     public GameObject door;
     public List<GameObject> doors;
-    public Material openableMat;
 
     public int lastOpenDoor;
 
@@ -21,14 +22,23 @@ public class ArenaManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Add all doors + current doors
+        for (int i = 0; i < doors.Count; i++)
+        {
+            GameManager.gameManager.allDoors.Add(doors[i]);
+        }
+        // Set doors to only new doors
         doors.Clear();
         foreach (Transform door in door.transform)
         {
             doors.Add(door.gameObject);
         }
 
+        // 
         GameManager.gameManager.arenaManager = gameObject.GetComponent<ArenaManager>();
+        GameManager.gameManager.enemySpawner = gameObject.GetComponent<EnemySpawner>();
 
+        // Open doors
         if (lastOpenDoor == 0) return;
 
         switch (lastOpenDoor)
@@ -82,15 +92,6 @@ public class ArenaManager : MonoBehaviour
         
     }
 
-    public void SetOpenable()
-    {
-        for (int i = 0; i < doors.Count; i++)
-        {
-            doors[i].gameObject.layer = 9;
-            doors[i].gameObject.GetComponent<Renderer>().material = openableMat;
-        }
-    }
-
     public void SpawnArena(int chosenDirection)
     {
         switch (chosenDirection)
@@ -135,14 +136,15 @@ public class ArenaManager : MonoBehaviour
             }
         }
 
+        NavMesh.RemoveAllNavMeshData();
         GameObject newArena = Instantiate(arenaToSpawn, GameManager.gameManager.posToSpawn, transform.localRotation);
         GameManager.gameManager.arenaManager = newArena.GetComponent<ArenaManager>();
         GameManager.gameManager.arenaManager.GetComponent<ArenaManager>().lastOpenDoor = chosenDirection;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawCube(GameManager.gameManager.posToSpawn, new Vector3(199.9f,50,199.9f));
-    }
+    }*/
 }

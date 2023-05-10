@@ -89,6 +89,28 @@ public class GrapplingHookControl : MonoBehaviour
                 }
                 Invoke(nameof(ExitGrapple), delay); // if pulling enemy is a feature, move this line up to the if
             }
+            else if (hit.transform.gameObject.layer == 9) // OPENABLE DOOR
+            {
+               // Debug.Log("door hit");
+               // Debug.Log(hit.transform.gameObject.name);
+                switch (hit.transform.gameObject.name)
+                {
+                    case "DoorN":
+                       // Debug.Log("door north");
+                        GameManager.gameManager.arenaManager.SpawnArena(1);
+                        break;
+                    case "DoorS":
+                        GameManager.gameManager.arenaManager.SpawnArena(2);
+                        break;
+                    case "DoorW":
+                        GameManager.gameManager.arenaManager.SpawnArena(3);
+                        break;
+                    case "DoorE":
+                        GameManager.gameManager.arenaManager.SpawnArena(4);
+                        break;
+                }
+                Invoke(nameof(Grapple), delay);
+            }
             else Invoke(nameof(Grapple), delay);
 
 

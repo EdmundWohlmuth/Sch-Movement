@@ -289,7 +289,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 2ac92dfbd5f61a247a70a2a68232127c, type: 2}
   m_BuildHeightMesh: 0
 --- !u!114 &5541804148780285540
 MonoBehaviour:
@@ -309,8 +309,6 @@ MonoBehaviour:
   - {fileID: 8430577545799164486}
   - {fileID: 4078724989234402490}
   - {fileID: 4488238226417434059}
-  openableMat: {fileID: 2100000, guid: 80d8df86b7b516148b0a2a4af0643684, type: 2}
-  nonOpenableMat: {fileID: 2100000, guid: 315f700f957eab54a9b8e980c5d0c0e1, type: 2}
   lastOpenDoor: 0
   arenaToSpawn: {fileID: 5797966115183935270}
 --- !u!1 &8086643233332082860
@@ -362,6 +360,7 @@ GameObject:
   - component: {fileID: 6152955288207375718}
   - component: {fileID: 6172793020354096284}
   - component: {fileID: 7050550296681714709}
+  - component: {fileID: 2446248932248895731}
   m_Layer: 0
   m_Name: BaseMesh
   m_TagString: Untagged
@@ -3580,6 +3579,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!114 &2446248932248895731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8365613972494478695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 200, y: 1, z: 200}
+  m_Center: {x: 0, y: 41.5, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &8430577545799164486
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,9 +21,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI enemyCountText;
 
+    // ARENAS
     public List<Vector3> spawnedPositions = new List<Vector3>();
+    public List<GameObject> allDoors = new List<GameObject>();
     public Vector3 posToSpawn;
     int arenasCompleted;
+    public Material openableMat;
+    public Material nonOpenableMat;
 
     private void Awake()
     {
@@ -101,8 +105,8 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("All Dead");
                     // spawn more
-                    enemySpawner.BeginSpawn();
-                    arenaManager.SetOpenable();
+                   // enemySpawner.BeginSpawn();
+                    SetDoorState(true);
                 }
                 break;
 
@@ -153,5 +157,27 @@ public class GameManager : MonoBehaviour
     {
         currentEnemies.Clear();
         droppedWeapons.Clear();
+    }
+
+    // DOORS
+    public void SetDoorState(bool istrue)
+    {
+        if (istrue)
+        {
+            for (int i = 0; i < allDoors.Count; i++)
+            {
+                allDoors[i].gameObject.layer = 9;
+                allDoors[i].gameObject.GetComponent<Renderer>().material = openableMat;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < allDoors.Count; i++)
+            {
+                allDoors[i].gameObject.layer = 0;
+                allDoors[i].gameObject.GetComponent<Renderer>().material = nonOpenableMat;
+            }
+        }
+
     }
 }

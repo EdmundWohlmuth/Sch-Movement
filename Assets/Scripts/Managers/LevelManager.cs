@@ -7,6 +7,11 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager levelManager;
 
+    public List<GameObject> northDoors;
+    public List<GameObject> southDoors;
+    public List<GameObject> eastDoors;
+    public List<GameObject> westDoors;
+
     // Start is called before the first frame update
     void Start()
     {

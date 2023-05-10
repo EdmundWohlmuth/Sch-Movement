@@ -157,7 +157,7 @@ public class AIController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, destination.transform.position) < 1f)
         {
-            Debug.Log(gameObject.name + " picked up gun");
+            //Debug.Log(gameObject.name + " picked up gun");
             destination.GetComponent<DroppedWeapon>().PickUp(WC);
             destination = null;
         }
