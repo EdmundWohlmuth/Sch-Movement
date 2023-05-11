@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    int enemiesToSpawn = 15;
+    int enemiesToSpawn = 12;
 
     NavMeshTriangulation triangulation;
 

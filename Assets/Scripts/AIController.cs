@@ -38,7 +38,7 @@ public class AIController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.currentEnemies.Add(gameObject);
+        GameManager.currentEnemies.Add(this);
     }
 
     // Start is called before the first frame update

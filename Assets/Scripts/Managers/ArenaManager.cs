@@ -1,150 +1,125 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ArenaManager : MonoBehaviour
 {
-    // ALL OF THIS IS, FRANKLY, AWFUL. OPTIMISE LATER
     int width = 200;
     public GameObject door;
-    public List<GameObject> doors;
+    public List<Door> doors;
 
-    public int lastOpenDoor;
+    public DoorDirection lastOpenDoor;
 
     public GameObject arenaToSpawn;
 
-    private void Awake()
+    private bool hasBeenSpawned = false;
+    IEnumerator Start()
     {
-        GameManager.gameManager.spawnedPositions.Add(gameObject.transform.position);
+        yield return new WaitForSeconds(0.1f);
+        if (!hasBeenSpawned) Spawned();
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Spawned(DoorDirection dir = DoorDirection.None)
     {
-        // Add all doors + current doors
-        for (int i = 0; i < doors.Count; i++)
-        {
-            GameManager.gameManager.allDoors.Add(doors[i]);
-        }
+        GameManager.gameManager.spawnedPositions[Vector3Int.RoundToInt(gameObject.transform.position)] = this;
+        hasBeenSpawned = true;
+        GameManager.gameManager.arenaManager = this;
         // Set doors to only new doors
         doors.Clear();
-        foreach (Transform door in door.transform)
-        {
-            doors.Add(door.gameObject);
-        }
 
-        // 
+        Debug.Log($"Arena spawned at {Vector3Int.RoundToInt(transform.position)}");
+        foreach (Transform door in door.transform)
+            if (door.gameObject.TryGetComponent<Door>(out Door foundDoor))
+                foundDoor.SetupDirection(this);
+
         GameManager.gameManager.arenaManager = gameObject.GetComponent<ArenaManager>();
-        GameManager.gameManager.enemySpawner = gameObject.GetComponent<EnemySpawner>();
+        //GameManager.gameManager.enemySpawner = gameObject.GetComponent<EnemySpawner>();
 
         // Open doors
-        if (lastOpenDoor == 0) return;
-
-        switch (lastOpenDoor)
+        if (dir != DoorDirection.None)
         {
-            case 1:
-                Debug.Log("south");
-
-                doors[1].SetActive(false);
-                doors[0].SetActive(true);
-                doors[2].SetActive(true);
-                doors[3].SetActive(true);
-                break;
-
-            case 2:
-                Debug.Log("north");
-
-                doors[0].SetActive(false);
-                doors[1].SetActive(true);
-                doors[2].SetActive(true);
-                doors[3].SetActive(true);
-
-                break;
-
-            case 3:
-                Debug.Log("west");
-                doors[3].SetActive(false);
-                doors[1].SetActive(true);
-                doors[0].SetActive(true);
-                doors[2].SetActive(true);
-
-                break;
-
-            case 4:
-                Debug.Log("east");
-
-                doors[2].SetActive(false);
-                doors[1].SetActive(true);
-                doors[3].SetActive(true);
-                doors[0].SetActive(true);
-                break;
-
-            default:
-                Debug.LogError("Something Went Wrong");
-                break;
+            lastOpenDoor = dir;
+            OpenLastDoor();
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OpenLastDoor(DoorDirection door = DoorDirection.None)
     {
-        
+        if (door != DoorDirection.None) lastOpenDoor = door;
+        if (lastOpenDoor == 0) return;
+
+        Debug.Log($"Arena {Vector3Int.RoundToInt(transform.position)} is opening door direction {lastOpenDoor}");
+        for (int i = 0; i < doors.Count; i++)
+            if (doors[i].direction == lastOpenDoor && doors[i].gameObject.activeInHierarchy)
+                doors[i].gameObject.SetActive(false);
     }
 
-    public void SpawnArena(int chosenDirection)
+    public Vector3Int GetNewSpawnPosition(DoorDirection chosenDirection)
     {
         switch (chosenDirection)
         {
-            case 1:
-                Debug.Log("north");
-                GameManager.gameManager.posToSpawn = new Vector3(GameManager.gameManager.posToSpawn.x + width, 0, GameManager.gameManager.posToSpawn.z);
-                doors[0].SetActive(false);
-                break;
-
-            case 2:
-                Debug.Log("south");
-                GameManager.gameManager.posToSpawn = new Vector3(GameManager.gameManager.posToSpawn.x - width, 0, GameManager.gameManager.posToSpawn.z);
-                doors[1].SetActive(false);
-
-                break;
-
-            case 3:
-                Debug.Log("east");
-                doors[2].SetActive(false);
-                GameManager.gameManager.posToSpawn = new Vector3(GameManager.gameManager.posToSpawn.x, 0, GameManager.gameManager.posToSpawn.z + width);
-                break;
-
-            case 4:
-                Debug.Log("west");
-                GameManager.gameManager.posToSpawn = new Vector3(GameManager.gameManager.posToSpawn.x, 0,
-                    GameManager.gameManager.posToSpawn.z - width);
-                doors[3].SetActive(false);
-                break;
-
-            default:
-                Debug.LogError("Something Went Wrong");
-                break;
+            case DoorDirection.South:
+                return Vector3Int.RoundToInt(transform.position + (width * -Vector3Int.forward));
+            case DoorDirection.North:
+                return Vector3Int.RoundToInt(transform.position + (width * Vector3Int.forward));
+            case DoorDirection.West:
+                return Vector3Int.RoundToInt(transform.position + (width * -Vector3Int.right));
+            case DoorDirection.East:
+                return Vector3Int.RoundToInt(transform.position + (width * Vector3Int.right));
         }
-
-        for (int i = 0; i < GameManager.gameManager.spawnedPositions.Count; i++)
-        {
-            if (GameManager.gameManager.posToSpawn == GameManager.gameManager.spawnedPositions[i])
-            {
-                Debug.Log("Cannot Spawn");
-                return;
-            }
-        }
-
-        NavMesh.RemoveAllNavMeshData();
-        GameObject newArena = Instantiate(arenaToSpawn, GameManager.gameManager.posToSpawn, transform.localRotation);
-        GameManager.gameManager.arenaManager = newArena.GetComponent<ArenaManager>();
-        GameManager.gameManager.arenaManager.GetComponent<ArenaManager>().lastOpenDoor = chosenDirection;
+        return Vector3Int.zero;
     }
 
-    /*private void OnDrawGizmos()
+    public Vector3Int ArenaId => Vector3Int.RoundToInt(transform.position);
+
+    public bool SpawnArena(DoorDirection chosenDirection)
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawCube(GameManager.gameManager.posToSpawn, new Vector3(199.9f,50,199.9f));
-    }*/
+        Debug.Log($"My arena {ArenaId} is trying to spawn an arena on the direction {chosenDirection} which would result in Arena ID {GetNewSpawnPosition(chosenDirection)} Does it alreayd exist? {GameManager.gameManager.spawnedPositions.ContainsKey(GetNewSpawnPosition(chosenDirection))}");
+        GameManager.gameManager.posToSpawn = GetNewSpawnPosition(chosenDirection);
+        if (GameManager.gameManager.spawnedPositions.TryGetValue(GameManager.gameManager.posToSpawn, out ArenaManager otherArena))
+        {
+            Debug.Log($"I {ArenaId} Cannot Spawn arena in direction {chosenDirection} already have arena at {GameManager.gameManager.posToSpawn} open door in {OppositeDirection(chosenDirection)}");
+
+            otherArena.OpenLastDoor(OppositeDirection(chosenDirection));
+
+            OpenLastDoor(chosenDirection);
+            return false;
+        }
+
+        OpenLastDoor(chosenDirection);
+
+        NavMesh.RemoveAllNavMeshData();
+        ArenaManager newArena = Instantiate(GameManager.gameManager.arenaToSpawn.GetRandom(), GameManager.gameManager.posToSpawn, Quaternion.Euler(0, UnityEngine.Random.Range(0, 4) * 90, 0)).GetComponent<ArenaManager>();
+        newArena.transform.SetParent(GameObject.Find("ArenaHolder").transform);
+        newArena.gameObject.SetActive(true);
+        newArena.Spawned(OppositeDirection(chosenDirection));
+
+        StartCoroutine(SpawnEnemies(newArena));
+
+        return true;
+    }
+
+    public DoorDirection OppositeDirection(DoorDirection desiredDirection)
+    {
+        return desiredDirection switch
+        {
+            DoorDirection.South => (DoorDirection.North),
+            DoorDirection.North => (DoorDirection.South),
+            DoorDirection.West => (DoorDirection.East),
+            DoorDirection.East => (DoorDirection.West),
+            _ => DoorDirection.None
+        };
+    }
+
+    public IEnumerator SpawnEnemies(ArenaManager newArena)
+    {
+        yield return new WaitForSeconds(.1f);
+        newArena.GetComponent<EnemySpawner>().BeginSpawn();
+        Door.SetDoorState(false);
+    }
 }

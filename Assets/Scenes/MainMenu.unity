@@ -347,7 +347,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-60700
+  m_Name: pb_Mesh27958
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -4185,10 +4185,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d86fbece8ff72d047bf5118f253b64e7, type: 2}
   - {fileID: 11400000, guid: 1ad42d59f76ff604c92bd2312392d2a6, type: 2}
   playerWeapons: {fileID: 0}
-  enemySpawner: {fileID: 0}
   ammoText: {fileID: 1338481943}
   enemyCountText: {fileID: 1716334774}
-  spawnedPositions: []
+  arenaToSpawn:
+  - {fileID: 5583831439876307783, guid: e8eab9e2489a2ec42ac92a8104792aaf, type: 3}
   allDoors: []
   posToSpawn: {x: 0, y: 0, z: 0}
   openableMat: {fileID: 2100000, guid: 80d8df86b7b516148b0a2a4af0643684, type: 2}
@@ -4218,7 +4218,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-58224
+  m_Name: pb_Mesh28128
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -5537,7 +5537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2357377691403436759
 Transform:
   m_ObjectHideFlags: 0

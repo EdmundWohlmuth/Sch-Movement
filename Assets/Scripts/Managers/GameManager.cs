@@ -10,25 +10,36 @@ public class GameManager : MonoBehaviour
     public static Camera mainCam;
     public ArenaManager arenaManager;
 
-    public static List<GameObject> currentEnemies = new List<GameObject>();
+    public static List<AIController> currentEnemies = new List<AIController>();
     public static List<GameObject> droppedWeapons = new List<GameObject>();
     // DO THIS WITH BULLETS TOO - WITH 50 GUYS SHOOTING BUCKSHOT CAN USE THIS TO REDUCE LAG
 
     public List<WeaponData> weaponType = new List<WeaponData>();
     public WeaponController playerWeapons;
-    public EnemySpawner enemySpawner;
 
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI enemyCountText;
 
+    public List<ArenaManager> arenaToSpawn = new List<ArenaManager>();
+
     // ARENAS
-    public List<Vector3> spawnedPositions = new List<Vector3>();
+    public Dictionary<Vector3Int, ArenaManager> spawnedPositions = new Dictionary<Vector3Int, ArenaManager>();
     public List<GameObject> allDoors = new List<GameObject>();
-    public Vector3 posToSpawn;
+    public Vector3Int posToSpawn;
     int arenasCompleted;
     public Material openableMat;
     public Material nonOpenableMat;
 
+    [ContextMenu("KillAll")]
+    public void KillAllEnemies()
+    {
+        for (int i = currentEnemies.Count - 1; i >= 0; i--)
+        {
+            currentEnemies[i].gameObject.GetComponent<HealthController>().TakeDamage(int.MaxValue);
+        }
+
+        Debug.Log(currentEnemies.Count);
+    }
     private void Awake()
     {
         mainCam = Camera.main;
@@ -47,7 +58,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -57,24 +68,6 @@ public class GameManager : MonoBehaviour
         if (currentEnemies.Count <= 3)
         {
             // highlight enemies so they're easier to find
-        }
-
-        //TEMP
-        if (Input.GetKeyDown(KeyCode.Keypad8))
-        {
-            arenaManager.SpawnArena(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            arenaManager.SpawnArena(2);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            arenaManager.SpawnArena(3);
-        }
-        else if (Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            arenaManager.SpawnArena(4);
         }
     }
 
@@ -90,23 +83,22 @@ public class GameManager : MonoBehaviour
                 break;
 
             case UIManager.CurrentScreen._GamePlay:
-              
+
                 UIManager.uIManager.GamePlayState();
                 Time.timeScale = 1; // SHOULD ONLY BE CALLED WHEN STATE IS CHANGED
                 Cursor.lockState = CursorLockMode.Locked;
 
-                if (playerWeapons == null) playerWeapons = GameObject.Find("Player").GetComponent<WeaponController>();
-                if (enemySpawner == null) enemySpawner = GameObject.Find("LevelPrefab").GetComponent<EnemySpawner>(); //TEMP
+                if (playerWeapons == null && PlayerController.instance != null) playerWeapons = PlayerController.instance.GetComponent<WeaponController>();
+                //if (enemySpawner == null) enemySpawner = GameObject.Find("LevelPrefab").GetComponent<EnemySpawner>(); //TEMP
 
-                ammoText.text = "Ammo: " + playerWeapons.ammo;
+                if (playerWeapons)
+                    ammoText.text = "Ammo: " + playerWeapons.ammo;
                 enemyCountText.text = "Enemies: " + currentEnemies.Count;
 
                 if (currentEnemies.Count == 0)
                 {
                     //Debug.Log("All Dead");
-                    // spawn more
-                   // enemySpawner.BeginSpawn();
-                    SetDoorState(true);
+                    Door.SetDoorState(true);
                 }
                 break;
 
@@ -147,7 +139,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void GameOver()
-    {      
+    {
         UIManager.uIManager.currentState = UIManager.CurrentScreen._Loose;
 
         if (currentEnemies.Count > 0 || droppedWeapons.Count > 0) Reset();
@@ -157,27 +149,5 @@ public class GameManager : MonoBehaviour
     {
         currentEnemies.Clear();
         droppedWeapons.Clear();
-    }
-
-    // DOORS
-    public void SetDoorState(bool istrue)
-    {
-        if (istrue)
-        {
-            for (int i = 0; i < allDoors.Count; i++)
-            {
-                allDoors[i].gameObject.layer = 9;
-                allDoors[i].gameObject.GetComponent<Renderer>().material = openableMat;
-            }
-        }
-        else
-        {
-            for (int i = 0; i < allDoors.Count; i++)
-            {
-                allDoors[i].gameObject.layer = 0;
-                allDoors[i].gameObject.GetComponent<Renderer>().material = nonOpenableMat;
-            }
-        }
-
     }
 }

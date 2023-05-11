@@ -60,7 +60,15 @@ public class PlayerController : MonoBehaviour
     public WeaponController WC;
     public GameObject speedlinesHolder;
     SimpleCameraController cameraScript;
+    public static PlayerController instance;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()

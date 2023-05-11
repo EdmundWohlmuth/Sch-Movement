@@ -38,7 +38,7 @@ public class HealthController : MonoBehaviour
             health = 0;
             if (isAI) 
             {
-                GameManager.currentEnemies.Remove(gameObject);
+                GameManager.currentEnemies.Remove(this.gameObject.GetComponent<AIController>());
                 Destroy(gameObject);
             }          
             else GameManager.gameManager.GameOver();
