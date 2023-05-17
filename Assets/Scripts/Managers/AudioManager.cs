@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip gunHeavy;
     public AudioClip shotGun;
 
+    [Header("Grapple Audio")]
+    public List<AudioClip> grappleStart = new List<AudioClip>();
+
     [Header("Bullet Impacts")]
     public List<AudioClip> bulletImpact = new List<AudioClip>();
 

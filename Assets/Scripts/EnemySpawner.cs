@@ -33,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
 
     void GenEnemy()
     {
+        GameManager.gameManager.arenasCompleted++;
         int index = Random.Range(0, triangulation.vertices.Length);
 
         NavMeshHit hit;

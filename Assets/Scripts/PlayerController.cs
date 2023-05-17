@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Refrences")]
     public Rigidbody rb;
+    public AudioSource source;
     public GameObject cam;
     public GameObject camHolder;
     public GrapplingHookControl GHC;
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        source = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         GHC = GetComponent<GrapplingHookControl>();
         rb.freezeRotation = true;

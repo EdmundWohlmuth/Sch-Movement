@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public Dictionary<Vector3Int, ArenaManager> spawnedPositions = new Dictionary<Vector3Int, ArenaManager>();
     public List<GameObject> allDoors = new List<GameObject>();
     public Vector3Int posToSpawn;
-    int arenasCompleted;
+    public int arenasCompleted;
     public Material openableMat;
     public Material nonOpenableMat;
 
@@ -149,5 +149,11 @@ public class GameManager : MonoBehaviour
     {
         currentEnemies.Clear();
         droppedWeapons.Clear();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        //Gizmos.DrawCube(posToSpawn, new Vector3(199.9f, 50f, 199.9f));
     }
 }

@@ -74,6 +74,8 @@ public class GrapplingHookControl : MonoBehaviour
             grapplePoint = hit.point;
             //Debug.Log(hit.point);
 
+            AudioManager.audioManager.PlaySound(PC.source, AudioManager.audioManager.grappleStart[Random.Range(0, AudioManager.audioManager.grappleStart.Count)], false);
+
             if (hit.transform.gameObject.layer == 7) // IF HIT ENEMY, TAKE GUN IF AVAILABLE
             {
                 //Debug.Log("enemy");
