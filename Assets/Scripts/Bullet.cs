@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public bool isAI;
     public int damage;
     float destoryTimer = 5;
+    public GameObject tempSound;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +28,10 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == 0)
-        {           
+        {
             // create an effect on hit point
+            GameObject ricochet = Instantiate(tempSound);
+            ricochet.transform.position = gameObject.transform.position;
             Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 7)

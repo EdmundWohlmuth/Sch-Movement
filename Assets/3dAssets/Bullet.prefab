@@ -183,6 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAI: 0
   damage: 0
+  tempSound: {fileID: 1514231131998163993, guid: 1091651603f9ced4ab189b89e9b081f8,
+    type: 3}
 --- !u!96 &5183122479228260177
 TrailRenderer:
   serializedVersion: 3

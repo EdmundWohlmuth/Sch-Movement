@@ -177,6 +177,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5341fc49dde33e64393fdbb2bbf6db9a, type: 3}
   bulletImpact:
   - {fileID: 8300000, guid: d4b71448974076045bb2192cdf17bf3a, type: 3}
+  - {fileID: 8300000, guid: 400e0a92e75031548abe47fdb99f8541, type: 3}
+  - {fileID: 8300000, guid: a584cd7082b4b8f40a4d508dde2c830c, type: 3}
+  - {fileID: 8300000, guid: 3166f11f75d99bc4590413bfb8783f32, type: 3}
+  - {fileID: 8300000, guid: a46072a4245339c49870feeca15e73be, type: 3}
+  - {fileID: 8300000, guid: 57dc963e56f8e254d858c6cc87923221, type: 3}
+  - {fileID: 8300000, guid: 0b842a27efc89e64684983e1495e07fc, type: 3}
+  - {fileID: 8300000, guid: 1801435c2b2126b48860909b27aa1674, type: 3}
   playerDmgReact: []
   enemyDmgReact: []
 --- !u!1 &147724867
