@@ -25,7 +25,12 @@ public class HealthController : MonoBehaviour
         health = maxHelath;
 
         renderer = GetComponentInChildren<Renderer>();
-        if (!isAI) healthBar = GameObject.Find("Health").GetComponent<Slider>();
+        if (!isAI)
+        {
+            healthBar = GameObject.Find("Health").GetComponent<Slider>();
+            healthBar.value = healthBar.maxValue;
+        }
+        
     }
 
     public void TakeDamage(int damage)

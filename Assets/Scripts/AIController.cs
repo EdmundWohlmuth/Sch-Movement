@@ -31,7 +31,7 @@ public class AIController : MonoBehaviour
     // Refrences
     GameObject player;
     [SerializeField] GameObject destination;
-    [SerializeField] NavMeshAgent agent;
+    public NavMeshAgent agent;
     WeaponController WC;
     [SerializeField] GameObject gunPos;
     [SerializeField] GameObject pos;

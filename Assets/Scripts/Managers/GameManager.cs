@@ -65,9 +65,13 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         ScreenState();
-        if (currentEnemies.Count <= 3)
+        if (currentEnemies.Count <= 4)
         {
             // highlight enemies so they're easier to find
+            for (int i = 0; i < currentEnemies.Count; i++)
+            {
+                currentEnemies[i].GetComponent<AIController>().agent.SetDestination(playerWeapons.gameObject.transform.position);
+            }
         }
     }
 

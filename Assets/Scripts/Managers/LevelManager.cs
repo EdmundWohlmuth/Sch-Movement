@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour
     {
         UIManager.uIManager.currentState = UIManager.CurrentScreen._GamePlay;
         SceneManager.LoadScene("SampleScene");
+        AudioManager.audioManager.StartMusic();
     }
     public void GoToMainMenu()
     {
