@@ -35,6 +35,7 @@ public class AIController : MonoBehaviour
     WeaponController WC;
     [SerializeField] GameObject gunPos;
     [SerializeField] GameObject pos;
+    public Animator animator;
 
     private void OnEnable()
     {
@@ -55,6 +56,9 @@ public class AIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        animator.SetFloat("XMovement", agent.velocity.x);
+        animator.SetFloat("ZMovement", agent.velocity.z);
+
         if (WC.weapon == WeaponController.Weapons.Melee && lookingForGun == false && destination == null)
         {
             lookingForGun = true;
