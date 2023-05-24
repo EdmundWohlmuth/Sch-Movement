@@ -30,6 +30,7 @@ public class AIController : MonoBehaviour
 
     // Refrences
     GameObject player;
+    public GameObject viewPos;
     [SerializeField] GameObject destination;
     public NavMeshAgent agent;
     WeaponController WC;
@@ -51,6 +52,7 @@ public class AIController : MonoBehaviour
 
         startPos = transform.position;
         currentState = state.idle;
+        
     }
 
     // Update is called once per frame
@@ -65,9 +67,11 @@ public class AIController : MonoBehaviour
             currentState = state.missingGun;
         }
 
-        sightCheck = Physics.CheckSphere(pos.transform.position, sightRange, playerMask);
-        lineOfSight = Physics.Raycast(pos.transform.position, player.transform.position - transform.position, sightRange, playerMask);
-        obstructedSight = Physics.Raycast(pos.transform.position, player.transform.position - transform.position, sightRange, obstrutionMask);
+        sightCheck = Physics.CheckSphere(viewPos.transform.position, sightRange, playerMask);
+        lineOfSight = Physics.Raycast(viewPos.transform.position, player.transform.position - viewPos.transform.position, sightRange, playerMask);
+        obstructedSight = Physics.Raycast(viewPos.transform.position, player.transform.position - viewPos.transform.position, sightRange, obstrutionMask);
+
+        
 
         //-STATE-MACHINE-------
         switch (currentState)
@@ -78,40 +82,48 @@ public class AIController : MonoBehaviour
                 {
                     currentState = state.chase;
                 }
-                Debug.DrawRay(pos.transform.position, player.transform.position - transform.position, Color.gray, obstrutionMask);
-                Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.blue);
-
                 break;
 
             case state.chase:
 
                 gunPos.transform.rotation = new Quaternion(0, 0, 0, 0);
 
-                if (!sightCheck && !lineOfSight)
+                if (!sightCheck && !lineOfSight || !sightCheck && lineOfSight)
                 {
+                    Debug.DrawRay(viewPos.transform.position, player.transform.position - viewPos.transform.position, Color.gray, obstrutionMask);
                     agent.SetDestination(startPos);
                     currentState = state.idle;
                 }
-                else if (sightCheck && lineOfSight && !obstructedSight)
+                /*else if (lineOfSight && obstructedSight)
                 {
+                    //currentState = state.idle;
+                    agent.SetDestination(startPos);
+                    Debug.DrawRay(viewPos.transform.position, player.transform.position - viewPos.transform.position, Color.gray, obstrutionMask);
+                }*/
+                else if (lineOfSight) // && !o
+                {
+                    Debug.DrawRay(viewPos.transform.position, player.transform.position - viewPos.transform.position, Color.blue, playerMask);
+
                     agent.SetDestination(player.transform.position); // go to player                   
 
-                    attackCheck = Physics.CheckSphere(transform.position, attackRange, playerMask);
+                    attackCheck = Physics.CheckSphere(viewPos.transform.position, attackRange, playerMask);
 
                     if (attackCheck && lineOfSight && !obstructedSight)
                     {
                         currentState = state.attack;
                     }
                 }
+                else if (!lineOfSight && obstructedSight)
+                {
+                    currentState = state.idle;
+                    Debug.DrawRay(viewPos.transform.position, player.transform.position - viewPos.transform.position, Color.black);
+                }
                 else
                 {
-
-                    if (attackCheck && lineOfSight)
-                    {
-                        currentState = state.attack;
-                    }
+                    Debug.Log("Line of Sight: " + lineOfSight);
+                    Debug.Log("Obstructed: " + obstructedSight);
                 }
-                Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.black);
+                
 
                 break;
 
@@ -129,7 +141,7 @@ public class AIController : MonoBehaviour
                 {
                     currentState = state.chase;
                 }
-                Debug.DrawRay(pos.transform.position, player.transform.position - pos.transform.position, Color.red);
+                Debug.DrawRay(viewPos.transform.position, player.transform.position - viewPos.transform.position, Color.red);
 
                 break;
 
