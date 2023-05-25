@@ -75,6 +75,10 @@ public class SimpleCameraController : MonoBehaviour
         // Rotation
         var mouseMovement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y") * (invertY ? 1 : -1));
 
+        if (Cursor.lockState == CursorLockMode.None) {
+            mouseMovement = Vector2.zero;
+        }
+
         var mouseSensitivityFactor = mouseSensitivityCurve.Evaluate(mouseMovement.magnitude);
 
         m_TargetCameraState.yaw += mouseMovement.x * mouseSensitivityFactor;

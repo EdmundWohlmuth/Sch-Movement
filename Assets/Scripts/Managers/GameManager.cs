@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
             case UIManager.CurrentScreen._MainMenu:
                 UIManager.uIManager.MainMenuState(); // THESE ARE CALLED EVERY FRAME, BAD.
                 Time.timeScale = 1;
-                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.lockState = CursorLockMode.None;
 
                 break;
 
@@ -90,7 +90,10 @@ public class GameManager : MonoBehaviour
 
                 UIManager.uIManager.GamePlayState();
                 Time.timeScale = 1; // SHOULD ONLY BE CALLED WHEN STATE IS CHANGED
-                Cursor.lockState = CursorLockMode.Locked;
+                if(Input.GetMouseButton(0))
+                    Cursor.lockState = CursorLockMode.Locked;
+                if(Input.GetKeyDown(KeyCode.Escape))
+                    Cursor.lockState = CursorLockMode.None;
 
                 if (playerWeapons == null && PlayerController.instance != null) playerWeapons = PlayerController.instance.GetComponent<WeaponController>();
                 //if (enemySpawner == null) enemySpawner = GameObject.Find("LevelPrefab").GetComponent<EnemySpawner>(); //TEMP
@@ -109,14 +112,14 @@ public class GameManager : MonoBehaviour
             case UIManager.CurrentScreen._Pause:
 
                 Time.timeScale = 0;
-                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.lockState = CursorLockMode.None;
 
                 break;
 
             case UIManager.CurrentScreen._Win:
 
                 Time.timeScale = 0;
-                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.lockState = CursorLockMode.None;
 
                 break;
 
@@ -124,7 +127,7 @@ public class GameManager : MonoBehaviour
 
                 UIManager.uIManager.LooseState();
                 Time.timeScale = 0;
-                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.lockState = CursorLockMode.None;
                 UIManager.uIManager.LooseState();
 
                 break;
